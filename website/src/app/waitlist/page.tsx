@@ -1,71 +1,80 @@
 "use client"
 import { useState } from 'react';
-import Head from 'next/head';
 import Link from 'next/link';
+import { motion } from "framer-motion";
+import { Terminal, ArrowLeft } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+
 export default function Waitlist() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // Simple email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setMessage('Please enter a valid email address.');
       return;
     }
-
-    // Here, you would typically send the email to your server or a service like Mailchimp
-    // For this example, we'll just simulate a successful submission
     setIsSubmitted(true);
     setMessage('Thank you! You have been added to the waitlist.');
-    setEmail(''); // Clear the input field after submission
+    setEmail('');
   };
 
   return (
-    <div className="bg-gray-900 text-gray-100 min-h-screen flex flex-col items-center justify-center">
-      <Head>
-        <title>Join the Waitlist</title>
-        <meta name="description" content="Submit your email to join the waitlist for our upcoming product." />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-    
-      <main className="w-full max-w-md p-8 bg-gray-800 rounded-lg shadow-lg mb-4">
-        <h1 className="text-3xl font-bold mb-6 text-center text-white">Give Us a New Repo or Just Connect</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-              Email Address
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 bg-gray-700 text-gray-100 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-          {message && (
-            <p className={`text-sm ${isSubmitted ? 'text-green-500' : 'text-red-500'} mb-4`}>
-              {message}
-            </p>
-          )}
-          <button
-            type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
-          >
-            Contact
-          </button>
-        </form>
-        <div className="mt-4 text-center">
+    <main className="relative min-h-screen flex flex-col items-center justify-center">
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#00ff94]/10 via-transparent to-transparent" />
+      
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-md p-8 relative z-10"
+      >
+        <div className="bg-black/50 backdrop-blur-sm border-2 border-[#00ff94]/20 rounded-xl p-8">
+          <h1 className="text-4xl font-bold mb-2 text-white">
+            Join the <span className="text-[#00ff94] glitch-text">Resurrection</span>
+          </h1>
+          <p className="text-[#00ff94]/70 font-mono mb-8">&gt; Be the first to breathe new life into dead repos</p>
+          
+          <form onSubmit={handleSubmit}>
+            <div className="mb-6">
+              <label htmlFor="email" className="block text-sm font-medium text-[#00ff94]/90 mb-2 font-mono">
+                &gt; Enter your email:
+              </label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-3 bg-black/50 text-[#00ff94] border-2 border-[#00ff94]/20 rounded-lg focus:outline-none focus:border-[#00ff94]/50 font-mono placeholder-[#00ff94]/30"
+                placeholder="developer@example.com"
+                required
+              />
+            </div>
+            {message && (
+              <p className={`text-sm font-mono mb-6 ${isSubmitted ? 'text-[#00ff94]' : 'text-red-500'}`}>
+                &gt; {message}
+              </p>
+            )}
+            <Button
+              type="submit"
+              size="lg"
+              className="w-full bg-[#00ff94] text-black hover:bg-[#00ff94]/90 font-bold text-lg shadow-neon"
+            >
+              <Terminal className="mr-2 h-5 w-5" />
+              ./join-waitlist
+            </Button>
+          </form>
         </div>
-      </main>
-      <Link href="/">
-        <span className="text-slate-400 hover:underline">← Back</span>
-      </Link>
-    </div>
+
+        <Link href="/" className="block mt-6 text-center">
+          <Button variant="ghost" className="text-[#00ff94]/70 hover:text-[#00ff94] font-mono">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            cd ..
+          </Button>
+        </Link>
+      </motion.div>
+    </main>
   );
 }

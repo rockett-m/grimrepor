@@ -1,140 +1,111 @@
 "use client"
-import Head from 'next/head';
-import GifDisplay from './components/GifDisplay'; // Ensure the path to GifDisplay is correct
-import Link from 'next/link';
-import Image from 'next/image';
-import imgPath from '../../public/assets/grimrepor.png';
+
+import { motion } from "framer-motion"
+import { Button } from "@/components/ui/button"
+import { Terminal, GitBranch, Sparkles, Zap, FileCode, Wrench } from 'lucide-react'
+import Image from "next/image"
+import Link from "next/link"
 
 export default function Home() {
   return (
-    <>
-    <Head>
-      <title>Grim-Repo</title>
-      <meta name="description" content="Support our AI-driven version control project." />
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
+    <main className="relative min-h-screen">
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#00ff94]/10 via-transparent to-transparent" />
       
-    <div className="bg-gray-900 text-gray-100">
-
       {/* Hero Section */}
-      <section className="bg-gray-800 py-16 shadow-lg">
-        <div className="container mx-auto px-4 text-center">
-          <Image
-            src={imgPath}
-            alt={"Grim Repor"}
-            width={300}
-            height={300}
-            className="rounded-lg shadow-lg mx-auto pb-4"
-            quality={100} // Ensures the image quality is high
-          />
-
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Grim-Repor:
-          </h1>
-          <h3 className="text-2xl md:text-5xl font-bold text-white mb-6">
-            Just fixed your <s><i>dead</i></s> dependencies 
-          </h3>          
-          <p className="text-lg md:text-xl text-gray-300 mb-6 max-w-[60vw] mx-auto">
-We've built an AI agent framwork that finds great research papers with code with broken-version python dependencies and makes sure that your code compiles for your users!          </p>
-<div className="bg-gray-900 text-green-400 font-mono text-lg md:text-xl py-4 px-6 rounded-lg mb-6 inline-block shadow-md cursor-pointer">
-  <span className="text-blue-400">you are here because </span> we found your broken <span className="text-gray-100">&lt;repo&gt;</span>
-  <svg
-    onClick={() => {
-      const command = "grimrepo fix <your_repo_here>";
-      navigator.clipboard.writeText(command).then(() => {
-        // Optionally, add feedback to the user here (e.g., a toast notification)
-      }).catch(err => {
-        console.error('Failed to copy: ', err);
-      });
-    }}
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 32 32"
-    className="inline-block ml-2 w-4 h-4 cursor-pointer hover:fill-current hover:text-blue-700 transition-colors duration-300"
-  >
-    <g fill="#90979c" className="color000000 svgShape" data-name="Layer 2">
-      <path
-        d="M28.47,11.64a2.74,2.74,0,0,0-.91-1.42L21.88,5.56A2.56,2.56,0,0,0,20.6,5a2.32,2.32,0,0,0-.5-.05h0L16,1.56A2.77,2.77,0,0,0,14.22.92h-8a2.8,2.8,0,0,0-2.8,2.8V13a1,1,0,0,0,1,1h0a1,1,0,0,0,1-1V3.71a.8.8,0,0,1,.8-.8H13.5v2H12.11a2.8,2.8,0,0,0-2.8,2.8V25.08H6.23a.8.8,0,0,1-.8-.8V20a1,1,0,0,0-1-1h0a1,1,0,0,0-1,1v4.29a2.8,2.8,0,0,0,2.8,2.8H9.31v1.2a2.8,2.8,0,0,0,2.8,2.8H25.78a2.79,2.79,0,0,0,2.79-2.79V12.38A2.52,2.52,0,0,0,28.47,11.64Zm-7.09-3.9,3.84,3.15H21.71a.33.33,0,0,1-.33-.33Zm-5.88-4,1.44,1.18H15.5ZM25.78,29.08H12.11a.8.8,0,0,1-.8-.8V7.71a.8.8,0,0,1,.8-.8h7.27v3.64a2.33,2.33,0,0,0,2.33,2.33h4.86v15.4A.79.79,0,0,1,25.78,29.08Z"
-        className="color000000 svgShape"
-      />
-      <path
-        d="M23 16H16a1 1 0 1 0 0 2h7a1 1 0 0 0 0-2zM23 22.38H16a1 1 0 1 0 0 2h7a1 1 0 0 0 0-2z"
-        className="color000000 svgShape"
-      />
-    </g>
-  </svg>
-</div>
-
-
-
+      <section className="relative overflow-hidden py-24 md:py-32">
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="max-w-2xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="inline-block mb-6 px-4 py-1.5 border-2 border-[#00ff94]/20 rounded-full bg-black/50 text-[#00ff94]/80 font-bold">
+                pip install grim-repor
+              </div>
+              <h1 className="text-5xl md:text-7xl font-bold mb-8 text-white leading-tight">
+                Your Code's
+                <span className="block text-[#00ff94] glitch-text mt-2">Second Chance</span>
+              </h1>
+              <p className="text-lg md:text-xl text-[#00ff94]/70 mb-10 font-mono leading-relaxed max-w-xl mx-auto">
+                &gt; We resurrect research repositories by fixing broken Python dependencies. 
+                Our AI vigilante roams the internet, finding and fixing outdated dependencies 
+                so your code runs smoothly again.
+              </p>
+              <div className="flex justify-center gap-4">
+                <Link href="/waitlist">
+                  <Button size="lg" variant="outline" className="border-2 border-[#00ff94] text-[#00ff94] hover:bg-[#00ff94]/10 font-bold text-lg">
+                    <GitBranch className="mr-2 h-5 w-5" />
+                    Submit Repository
+                    </Button>
+                </Link>
+              </div>
+            </motion.div>
+          </div>
         </div>
-        <div className='flex justify-center mt-6'>
-        <Link href="/waitlist">
-            <span className="bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600 transition duration-300 cursor-pointer shadow-lg">
-              Give us a new repo to fix
-            </span>
-          </Link>
+
+        {/* Features Section */}
+        <div className="container mx-auto px-6 py-32">
+          <h2 className="text-4xl md:text-6xl font-bold text-center mb-20 text-white max-w-3xl mx-auto leading-tight">
+            &gt; Bringing Your Code <span className="text-[#00ff94] glitch-text">Back to Life</span>
+          </h2>
+          <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+            {features.map((feature, index) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.2, duration: 0.5 }}
+                className="group bg-black/50 backdrop-blur-sm p-8 rounded-xl border-2 border-[#00ff94]/20 hover:border-[#00ff94]/50 transition-all duration-300"
+              >
+                <div className="h-16 w-16 rounded-lg bg-[#00ff94]/10 flex items-center justify-center mb-6 group-hover:bg-[#00ff94]/20 transition-colors">
+                  {feature.icon}
+                </div>
+                <h3 className="text-2xl font-bold mb-4 text-[#00ff94]">{feature.title}</h3>
+                <p className="text-[#00ff94]/70 font-mono text-base leading-relaxed">{feature.description}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
-         
+
+        {/* CTA Section */}
+        <div className="container mx-auto px-6 pb-32">
+          <motion.div 
+            className="bg-[#00ff94]/10 border-2 border-[#00ff94]/30 rounded-xl p-12 text-center max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Found a Dead Repository?</h2>
+            <p className="text-xl text-[#00ff94]/70 mb-8 font-mono max-w-2xl mx-auto">Let our AI necromancer bring it back to life.</p>
+            <Link href="/submit">
+              <Button size="lg" className="bg-[#00ff94] text-black hover:bg-[#00ff94]/90 font-bold text-lg shadow-neon">
+                <Zap className="mr-2 h-5 w-5" />
+                Resurrect Now
+              </Button>
+            </Link>
+          </motion.div>
+        </div>
       </section>
-      {/* GIF Section */}
-      <section className="bg-gray-700 py-20 shadow-lg">
-        <div className="container mx-auto  text-center mt-[-2rem]">
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-We Keep Great Code Alive          </h1>        <p className="text-lg md:text-xl text-gray-300 max-w-[60vw] mb-6 mx-auto">
-          Time goes by and dependencies break. But maintenance is dull. We allow researchers to focus on what they do best: science.
-                    </p>
-          <GifDisplay altText="Funny GIF" width={400} height={300} />
-        </div>
-      </section>
-
-
- {/* About Section */}
- <section className="py-16 bg-gray-900 shadow-md">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">Our Commitment</h2>
-          <p className="text-lg text-gray-400 max-w-[60vw] mx-auto mb-6">
-            We are a group of developers who have faced the frustration of incompatible dependencies in GitHub repositories for years. Our mission is to create an AI-driven tool to solve this issue for everyone.
-          </p>
-        </div>
-
-        <div className="flex justify-center space-x-4">
-      <a
-        href="https://venmo.com/Connor-Dirks-1"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="bg-green-500 text-white px-4 py-3 rounded-full hover:bg-green-600 transition duration-300 shadow-lg"
-      >
-        THANKS TIP! $10
-      </a>
-
-      <a
-        href="https://calendly.com/sundaiclub/pip-ai-let-s-talk-about-the-pain-of-broken-repos" // Replace with your actual Calendly link
-        target="_blank"
-        rel="noopener noreferrer"
-        className="bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600 transition duration-300 shadow-lg"
-      >
-        Talk - Interview
-      </a>
-
-      <a
-        href="https://tally.so/r/3XEKKV" // Replace with your actual Twitter (X) link
-        target="_blank"
-        rel="noopener noreferrer"
-        className="bg-gray-500 text-white px-6 py-3 rounded-full hover:bg-gray-600 transition duration-300 shadow-lg"
-      >
-        Give us a new repo to fix
-      </a>
-    </div>
-      </section>
-
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 py-8 shadow-lg">
-        <div className="container mx-auto px-4 text-center">
-          <p>&copy; 2024 AI Version Control. All rights reserved.</p>
-        </div>
-      </footer>
-    </div>
-    </>
-  );
+    </main>
+  )
 }
+
+const features = [
+  {
+    title: "Smart Scanning",
+    description: "&gt; Our AI vigilante automatically identifies broken or outdated Python dependencies in research repositories.",
+    icon: <Terminal className="h-8 w-8 text-[#00ff94]" />,
+  },
+  {
+    title: "Auto-Fix Magic",
+    description: "&gt; Intelligent version resolution and compatibility fixes for requirements.txt, environment.yml, and setup.py.",
+    icon: <Wrench className="h-8 w-8 text-[#00ff94]" />,
+  },
+  {
+    title: "Research First",
+    description: "&gt; Specialized in keeping research code alive, ensuring your valuable work remains accessible and reproducible.",
+    icon: <Sparkles className="h-8 w-8 text-[#00ff94]" />,
+  },
+]
+

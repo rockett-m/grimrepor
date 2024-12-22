@@ -1,24 +1,33 @@
-"use client"; // Marking this as a client component
+"use client"
 
-import Link from "next/link";
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { motion } from "framer-motion"
 
-const Navbar = () => {
+export function Navbar() {
   return (
-    <nav className="bg-gray-900 shadow-lg py-4">
-      <div className="container mx-auto px-4 flex justify-between items-center">
-        <div className="text-xl font-bold text-white">grim repor</div>
-        <div className="md:flex space-x-8">
-          <Link href="/waitlist">
-          {/* <button onClick={() => alert("Chill we aren't there yet")}> */}
-            <span className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300 cursor-pointer">
-              Connect
-            </span>
-          {/* </button> */}
+    <motion.nav 
+      className="fixed w-full z-50 backdrop-blur-sm bg-black/30 border-b border-[#00ff94]/20"
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ type: "spring", stiffness: 100 }}
+    >
+      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+        <Link href="/" className="flex items-center space-x-2">
+          <span className="text-xl font-bold text-[#00ff94] glitch-text">
+            grim-repor:$<span className="animate-pulse">_</span>
+          </span>
+        </Link>
+        <div className="flex items-center space-x-4">
+          
+          <Link href = "/waitlist">
+          <Button className="bg-[#00ff94] text-black hover:bg-[#00ff94]/90 font-bold text-lg shadow-neon">
+            ./fix-my-repo
+          </Button>
           </Link>
         </div>
       </div>
-    </nav>
-  );
-};
+    </motion.nav>
+  )
+}
 
-export default Navbar;
