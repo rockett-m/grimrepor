@@ -40,9 +40,6 @@ error: subprocess-exited-with-error
 ╰─> See above for output.
 
 note: This error originates from a subprocess, and is likely not a problem with pip.
-
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
 "
 https://github.com/LIBOL/ODL,No requirements found
 https://github.com/leondgarse/keras_cv_attention_models/tree/main/keras_cv_attention_models/mobilenetv3_family,No requirements found
@@ -58,22 +55,22 @@ https://github.com/brandonrobertz/AcademicUrlTitles,"Failed:   error: subprocess
   │ exit code: 1
   ╰─> [22 lines of output]
       Traceback (most recent call last):
-        File ""/tmp/tmp13zb_ipj/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmp7nk15vyz/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
           main()
-        File ""/tmp/tmp13zb_ipj/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmp7nk15vyz/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
           json_out['return_val'] = hook(**hook_input['kwargs'])
                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/tmp13zb_ipj/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 118, in get_requires_for_build_wheel
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmp7nk15vyz/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 118, in get_requires_for_build_wheel
           return hook(config_settings)
                  ^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/pip-build-env-voa_l82_/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 332, in get_requires_for_build_wheel
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-nsk8pg8p/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 334, in get_requires_for_build_wheel
           return self._get_build_requires(config_settings, requirements=[])
                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/pip-build-env-voa_l82_/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 302, in _get_build_requires
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-nsk8pg8p/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 304, in _get_build_requires
           self.run_setup()
-        File ""/tmp/pip-build-env-voa_l82_/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 503, in run_setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-nsk8pg8p/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 522, in run_setup
           super().run_setup(setup_script=setup_script)
-        File ""/tmp/pip-build-env-voa_l82_/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 318, in run_setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-nsk8pg8p/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 320, in run_setup
           exec(code, locals())
         File ""<string>"", line 22
           print ""Unit tests have failed!""
@@ -89,9 +86,6 @@ error: subprocess-exited-with-error
 ╰─> See above for output.
 
 note: This error originates from a subprocess, and is likely not a problem with pip.
-
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
 "
 https://github.com/co-design-hybrid/co-design-hybrid,No requirements found
 https://github.com/arberzela/EfficientNAS,No requirements found
@@ -109,32 +103,32 @@ https://github.com/maxime1310/fuzzy_labeling_scRNA,"Failed:   error: subprocess-
   ╰─> [30 lines of output]
       Running from numpy source directory.
       <string>:369: UserWarning: Unrecognized setuptools command, proceeding with generating Cython sources and expanding templates
-      /tmp/pip-install-kbo8f3sg/numpy_c693408072294360a91c5c2eb4ccd4a5/numpy/distutils/misc_util.py:464: SyntaxWarning: ""is"" with a literal. Did you mean ""==""?
+      /private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-k7yz_ioe/numpy_6661fe6f63af45b3b174fd375aaf4b61/numpy/distutils/misc_util.py:464: SyntaxWarning: ""is"" with 'str' literal. Did you mean ""==""?
         return is_string(s) and ('*' in s or '?' is s)
       Traceback (most recent call last):
-        File ""/tmp/tmp9w1czmdx/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpqffkb222/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
           main()
-        File ""/tmp/tmp9w1czmdx/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpqffkb222/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
           json_out['return_val'] = hook(**hook_input['kwargs'])
                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/tmp9w1czmdx/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 149, in prepare_metadata_for_build_wheel
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpqffkb222/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 149, in prepare_metadata_for_build_wheel
           return hook(metadata_directory, config_settings)
                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/pip-build-env-rmwg1yle/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 373, in prepare_metadata_for_build_wheel
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-fgroh2o7/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 377, in prepare_metadata_for_build_wheel
           self.run_setup()
-        File ""/tmp/pip-build-env-rmwg1yle/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 503, in run_setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-fgroh2o7/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 522, in run_setup
           super().run_setup(setup_script=setup_script)
-        File ""/tmp/pip-build-env-rmwg1yle/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 318, in run_setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-fgroh2o7/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 320, in run_setup
           exec(code, locals())
         File ""<string>"", line 394, in <module>
         File ""<string>"", line 373, in setup_package
-        File ""/tmp/pip-install-kbo8f3sg/numpy_c693408072294360a91c5c2eb4ccd4a5/numpy/distutils/__init__.py"", line 8, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-k7yz_ioe/numpy_6661fe6f63af45b3b174fd375aaf4b61/numpy/distutils/__init__.py"", line 8, in <module>
           from . import ccompiler
-        File ""/tmp/pip-install-kbo8f3sg/numpy_c693408072294360a91c5c2eb4ccd4a5/numpy/distutils/ccompiler.py"", line 17, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-k7yz_ioe/numpy_6661fe6f63af45b3b174fd375aaf4b61/numpy/distutils/ccompiler.py"", line 17, in <module>
           from numpy.distutils import log
-        File ""/tmp/pip-install-kbo8f3sg/numpy_c693408072294360a91c5c2eb4ccd4a5/numpy/distutils/log.py"", line 13, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-k7yz_ioe/numpy_6661fe6f63af45b3b174fd375aaf4b61/numpy/distutils/log.py"", line 13, in <module>
           from numpy.distutils.misc_util import (red_text, default_text, cyan_text,
-        File ""/tmp/pip-install-kbo8f3sg/numpy_c693408072294360a91c5c2eb4ccd4a5/numpy/distutils/misc_util.py"", line 15, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-k7yz_ioe/numpy_6661fe6f63af45b3b174fd375aaf4b61/numpy/distutils/misc_util.py"", line 15, in <module>
           from distutils.msvccompiler import get_build_architecture
       ModuleNotFoundError: No module named 'distutils.msvccompiler'
       [end of output]
@@ -147,9 +141,6 @@ error: metadata-generation-failed
 
 note: This is an issue with the package mentioned above, not pip.
 hint: See above for details.
-
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
 "
 https://github.com/danielholanda/LeFlow,No requirements found
 https://github.com/earlbellinger/thesis,No requirements found
@@ -219,9 +210,6 @@ error: subprocess-exited-with-error
 ╰─> See above for output.
 
 note: This error originates from a subprocess, and is likely not a problem with pip.
-
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
 "
 https://github.com/user525/mfgpc,No requirements found
 https://github.com/YuvalBahat/Confidence_From_Invariance,No requirements found
@@ -233,30 +221,30 @@ https://github.com/TatsuyaShirakawa/poincare-embedding,"Failed:   error: subproc
   ╰─> [28 lines of output]
       Running from numpy source directory.
       <string>:390: UserWarning: Unrecognized setuptools command, proceeding with generating Cython sources and expanding templates
-      /tmp/pip-install-_cxwlwtb/numpy_ee5c3fcb9e11423ea97d19b6aa334aa7/numpy/distutils/misc_util.py:476: SyntaxWarning: ""is"" with a literal. Did you mean ""==""?
+      /private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-u8k3ecbs/numpy_0c687576f19d4b9e94df89900420e7a7/numpy/distutils/misc_util.py:476: SyntaxWarning: ""is"" with 'str' literal. Did you mean ""==""?
         return is_string(s) and ('*' in s or '?' is s)
       Traceback (most recent call last):
-        File ""/tmp/tmp4dzb7dlu/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmplkg0k3o5/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
           main()
-        File ""/tmp/tmp4dzb7dlu/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmplkg0k3o5/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
           json_out['return_val'] = hook(**hook_input['kwargs'])
                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/tmp4dzb7dlu/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 149, in prepare_metadata_for_build_wheel
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmplkg0k3o5/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 149, in prepare_metadata_for_build_wheel
           return hook(metadata_directory, config_settings)
                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/pip-build-env-hlsnfxwk/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 373, in prepare_metadata_for_build_wheel
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-w1ih39vd/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 377, in prepare_metadata_for_build_wheel
           self.run_setup()
-        File ""/tmp/pip-build-env-hlsnfxwk/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 503, in run_setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-w1ih39vd/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 522, in run_setup
           super().run_setup(setup_script=setup_script)
-        File ""/tmp/pip-build-env-hlsnfxwk/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 318, in run_setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-w1ih39vd/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 320, in run_setup
           exec(code, locals())
         File ""<string>"", line 415, in <module>
         File ""<string>"", line 394, in setup_package
-        File ""/tmp/pip-install-_cxwlwtb/numpy_ee5c3fcb9e11423ea97d19b6aa334aa7/numpy/distutils/core.py"", line 26, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-u8k3ecbs/numpy_0c687576f19d4b9e94df89900420e7a7/numpy/distutils/core.py"", line 26, in <module>
           from numpy.distutils.command import config, config_compiler, \
-        File ""/tmp/pip-install-_cxwlwtb/numpy_ee5c3fcb9e11423ea97d19b6aa334aa7/numpy/distutils/command/config.py"", line 19, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-u8k3ecbs/numpy_0c687576f19d4b9e94df89900420e7a7/numpy/distutils/command/config.py"", line 19, in <module>
           from numpy.distutils.mingw32ccompiler import generate_manifest
-        File ""/tmp/pip-install-_cxwlwtb/numpy_ee5c3fcb9e11423ea97d19b6aa334aa7/numpy/distutils/mingw32ccompiler.py"", line 34, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-u8k3ecbs/numpy_0c687576f19d4b9e94df89900420e7a7/numpy/distutils/mingw32ccompiler.py"", line 34, in <module>
           from distutils.msvccompiler import get_build_version as get_build_msvc_version
       ModuleNotFoundError: No module named 'distutils.msvccompiler'
       [end of output]
@@ -269,17 +257,13 @@ error: metadata-generation-failed
 
 note: This is an issue with the package mentioned above, not pip.
 hint: See above for details.
-
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
 "
 https://github.com/bobbyhaliwela/AutoRcCar-Behavioral-Clonning,No requirements found
 https://github.com/unsky/focal-loss,No requirements found
-https://github.com/benevolentAI/guacamol_baselines,"Failed: ERROR: Invalid requirement: 'dockers/requirements.txt' (from line 1 of /tmp/tmpr5ukknkz)
+https://github.com/benevolentAI/guacamol_baselines,"Failed: ERROR: Invalid requirement: 'dockers/requirements.txt': Expected end or semicolon (after name and no valid version specifier)
+    dockers/requirements.txt
+           ^ (from line 1 of /var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpnc_8yyfy)
 Hint: It looks like a path. File 'dockers/requirements.txt' does not exist.
-
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
 "
 https://github.com/Babylonpartners/fuzzymax,"Failed:   error: subprocess-exited-with-error
   
@@ -288,32 +272,32 @@ https://github.com/Babylonpartners/fuzzymax,"Failed:   error: subprocess-exited-
   ╰─> [30 lines of output]
       Running from numpy source directory.
       <string>:378: UserWarning: Unrecognized setuptools command, proceeding with generating Cython sources and expanding templates
-      /tmp/pip-install-uyv1fawz/numpy_2c156f6d9fbd4e3382f8d111018e1a4d/numpy/distutils/misc_util.py:477: SyntaxWarning: ""is"" with a literal. Did you mean ""==""?
+      /private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-6u6m1lg4/numpy_e54993cb26d84a1096ea16e604994014/numpy/distutils/misc_util.py:477: SyntaxWarning: ""is"" with 'str' literal. Did you mean ""==""?
         return is_string(s) and ('*' in s or '?' is s)
       Traceback (most recent call last):
-        File ""/tmp/tmp98xebw4n/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpnne18rfm/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
           main()
-        File ""/tmp/tmp98xebw4n/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpnne18rfm/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
           json_out['return_val'] = hook(**hook_input['kwargs'])
                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/tmp98xebw4n/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 149, in prepare_metadata_for_build_wheel
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpnne18rfm/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 149, in prepare_metadata_for_build_wheel
           return hook(metadata_directory, config_settings)
                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/pip-build-env-dnq818m9/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 373, in prepare_metadata_for_build_wheel
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-36c51qm2/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 377, in prepare_metadata_for_build_wheel
           self.run_setup()
-        File ""/tmp/pip-build-env-dnq818m9/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 503, in run_setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-36c51qm2/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 522, in run_setup
           super().run_setup(setup_script=setup_script)
-        File ""/tmp/pip-build-env-dnq818m9/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 318, in run_setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-36c51qm2/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 320, in run_setup
           exec(code, locals())
         File ""<string>"", line 403, in <module>
         File ""<string>"", line 382, in setup_package
-        File ""/tmp/pip-install-uyv1fawz/numpy_2c156f6d9fbd4e3382f8d111018e1a4d/numpy/distutils/__init__.py"", line 8, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-6u6m1lg4/numpy_e54993cb26d84a1096ea16e604994014/numpy/distutils/__init__.py"", line 8, in <module>
           from . import ccompiler
-        File ""/tmp/pip-install-uyv1fawz/numpy_2c156f6d9fbd4e3382f8d111018e1a4d/numpy/distutils/ccompiler.py"", line 17, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-6u6m1lg4/numpy_e54993cb26d84a1096ea16e604994014/numpy/distutils/ccompiler.py"", line 17, in <module>
           from numpy.distutils import log
-        File ""/tmp/pip-install-uyv1fawz/numpy_2c156f6d9fbd4e3382f8d111018e1a4d/numpy/distutils/log.py"", line 13, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-6u6m1lg4/numpy_e54993cb26d84a1096ea16e604994014/numpy/distutils/log.py"", line 13, in <module>
           from numpy.distutils.misc_util import (red_text, default_text, cyan_text,
-        File ""/tmp/pip-install-uyv1fawz/numpy_2c156f6d9fbd4e3382f8d111018e1a4d/numpy/distutils/misc_util.py"", line 16, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-6u6m1lg4/numpy_e54993cb26d84a1096ea16e604994014/numpy/distutils/misc_util.py"", line 16, in <module>
           from distutils.msvccompiler import get_build_architecture
       ModuleNotFoundError: No module named 'distutils.msvccompiler'
       [end of output]
@@ -326,20 +310,13 @@ error: metadata-generation-failed
 
 note: This is an issue with the package mentioned above, not pip.
 hint: See above for details.
-
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
 "
-https://github.com/wrld/visual_navigation_pose_estimation,"Failed: ERROR: Invalid requirement: '_libgcc_mutex=0.1=main' (from line 1 of /tmp/tmpxf4_xg0u)
+https://github.com/wrld/visual_navigation_pose_estimation,"Failed: ERROR: Invalid requirement: '_libgcc_mutex=0.1=main': Expected package name at the start of dependency specifier
+    _libgcc_mutex=0.1=main
+    ^ (from line 1 of /var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmplj05ovyj)
 Hint: = is not a valid operator. Did you mean == ?
-
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
 "
 https://github.com/facebookresearch/higher,"Failed: ERROR: torch-1.2.0+cpu-cp37-cp37m-manylinux1_x86_64.whl is not a supported wheel on this platform.
-
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
 "
 https://github.com/rakshithShetty/captionGAN,No requirements found
 https://github.com/simonjisu/NMT,No requirements found
@@ -350,48 +327,59 @@ https://github.com/txhaug/nisq-sdp,No requirements found
 https://github.com/mdabbah/COOD_benchmarking,Success
 https://github.com/sshaar/clef2020-factchecking-task2,"Failed:   error: subprocess-exited-with-error
   
-  × Preparing metadata (pyproject.toml) did not run successfully.
+  × Getting requirements to build wheel did not run successfully.
   │ exit code: 1
-  ╰─> [26 lines of output]
-      Running from numpy source directory.
-      <string>:461: UserWarning: Unrecognized setuptools command, proceeding with generating Cython sources and expanding templates
+  ╰─> [40 lines of output]
+      <string>:31: SetuptoolsDeprecationWarning: The test command is disabled and references to it are deprecated.
+      !!
+      
+              ********************************************************************************
+              Please remove any references to `setuptools.command.test` in all supported versions of the affected package.
+      
+              This deprecation is overdue, please update your project and remove deprecated
+              calls to avoid build errors in the future.
+              ********************************************************************************
+      
+      !!
       Traceback (most recent call last):
-        File ""/tmp/tmphsjg5677/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpzb8vi7pe/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
           main()
-        File ""/tmp/tmphsjg5677/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpzb8vi7pe/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
           json_out['return_val'] = hook(**hook_input['kwargs'])
                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/tmphsjg5677/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 149, in prepare_metadata_for_build_wheel
-          return hook(metadata_directory, config_settings)
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/pip-build-env-gksf45yr/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 373, in prepare_metadata_for_build_wheel
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpzb8vi7pe/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 118, in get_requires_for_build_wheel
+          return hook(config_settings)
+                 ^^^^^^^^^^^^^^^^^^^^^
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-2_3wgdxo/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 334, in get_requires_for_build_wheel
+          return self._get_build_requires(config_settings, requirements=[])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-2_3wgdxo/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 304, in _get_build_requires
           self.run_setup()
-        File ""/tmp/pip-build-env-gksf45yr/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 503, in run_setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-2_3wgdxo/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 522, in run_setup
           super().run_setup(setup_script=setup_script)
-        File ""/tmp/pip-build-env-gksf45yr/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 318, in run_setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-2_3wgdxo/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 320, in run_setup
           exec(code, locals())
-        File ""<string>"", line 488, in <module>
-        File ""<string>"", line 465, in setup_package
-        File ""/tmp/pip-install-yv6dzspc/numpy_9e5d5e676d4242f097d727e1a4f3e341/numpy/distutils/core.py"", line 26, in <module>
-          from numpy.distutils.command import config, config_compiler, \
-        File ""/tmp/pip-install-yv6dzspc/numpy_9e5d5e676d4242f097d727e1a4f3e341/numpy/distutils/command/config.py"", line 20, in <module>
-          from numpy.distutils.mingw32ccompiler import generate_manifest
-        File ""/tmp/pip-install-yv6dzspc/numpy_9e5d5e676d4242f097d727e1a4f3e341/numpy/distutils/mingw32ccompiler.py"", line 34, in <module>
-          from distutils.msvccompiler import get_build_version as get_build_msvc_version
-      ModuleNotFoundError: No module named 'distutils.msvccompiler'
+        File ""<string>"", line 50, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-tivylkiy/matplotlib_f5e7218d144045af9a24aa97a504dfd1/versioneer.py"", line 1410, in get_version
+          return get_versions()[""version""]
+                 ^^^^^^^^^^^^^^
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-tivylkiy/matplotlib_f5e7218d144045af9a24aa97a504dfd1/versioneer.py"", line 1344, in get_versions
+          cfg = get_config_from_root(root)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-tivylkiy/matplotlib_f5e7218d144045af9a24aa97a504dfd1/versioneer.py"", line 401, in get_config_from_root
+          parser = configparser.SafeConfigParser()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      AttributeError: module 'configparser' has no attribute 'SafeConfigParser'. Did you mean: 'RawConfigParser'?
       [end of output]
   
   note: This error originates from a subprocess, and is likely not a problem with pip.
-error: metadata-generation-failed
+error: subprocess-exited-with-error
 
-× Encountered error while generating package metadata.
+× Getting requirements to build wheel did not run successfully.
+│ exit code: 1
 ╰─> See above for output.
 
-note: This is an issue with the package mentioned above, not pip.
-hint: See above for details.
-
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
+note: This error originates from a subprocess, and is likely not a problem with pip.
 "
 https://github.com/Heumi/BEGAN-tensorflow,No requirements found
 https://github.com/mrkieumy/task-conditioned,No requirements found
@@ -423,30 +411,30 @@ https://github.com/ronggong/jingjuSingingPhraseMatching,"Failed:   error: subpro
   ╰─> [28 lines of output]
       Running from numpy source directory.
       <string>:366: UserWarning: Unrecognized setuptools command, proceeding with generating Cython sources and expanding templates
-      /tmp/pip-install-m07kaoxx/numpy_b0502a1add2e4d49a2213272c3aa73ef/numpy/distutils/misc_util.py:453: SyntaxWarning: ""is"" with a literal. Did you mean ""==""?
+      /private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-4a6qkc1v/numpy_b1e9539fcf364e1abbecf8c7e89f59a2/numpy/distutils/misc_util.py:453: SyntaxWarning: ""is"" with 'str' literal. Did you mean ""==""?
         return is_string(s) and ('*' in s or '?' is s)
       Traceback (most recent call last):
-        File ""/tmp/tmpworr1zun/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpvu8ooyg9/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
           main()
-        File ""/tmp/tmpworr1zun/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpvu8ooyg9/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
           json_out['return_val'] = hook(**hook_input['kwargs'])
                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/tmpworr1zun/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 149, in prepare_metadata_for_build_wheel
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpvu8ooyg9/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 149, in prepare_metadata_for_build_wheel
           return hook(metadata_directory, config_settings)
                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/pip-build-env-o6t0r5l0/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 373, in prepare_metadata_for_build_wheel
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-v3xf4e9u/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 377, in prepare_metadata_for_build_wheel
           self.run_setup()
-        File ""/tmp/pip-build-env-o6t0r5l0/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 503, in run_setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-v3xf4e9u/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 522, in run_setup
           super().run_setup(setup_script=setup_script)
-        File ""/tmp/pip-build-env-o6t0r5l0/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 318, in run_setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-v3xf4e9u/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 320, in run_setup
           exec(code, locals())
         File ""<string>"", line 391, in <module>
         File ""<string>"", line 370, in setup_package
-        File ""/tmp/pip-install-m07kaoxx/numpy_b0502a1add2e4d49a2213272c3aa73ef/numpy/distutils/core.py"", line 26, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-4a6qkc1v/numpy_b1e9539fcf364e1abbecf8c7e89f59a2/numpy/distutils/core.py"", line 26, in <module>
           from numpy.distutils.command import config, config_compiler, \
-        File ""/tmp/pip-install-m07kaoxx/numpy_b0502a1add2e4d49a2213272c3aa73ef/numpy/distutils/command/config.py"", line 18, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-4a6qkc1v/numpy_b1e9539fcf364e1abbecf8c7e89f59a2/numpy/distutils/command/config.py"", line 18, in <module>
           from numpy.distutils.mingw32ccompiler import generate_manifest
-        File ""/tmp/pip-install-m07kaoxx/numpy_b0502a1add2e4d49a2213272c3aa73ef/numpy/distutils/mingw32ccompiler.py"", line 34, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-4a6qkc1v/numpy_b1e9539fcf364e1abbecf8c7e89f59a2/numpy/distutils/mingw32ccompiler.py"", line 34, in <module>
           from distutils.msvccompiler import get_build_version as get_build_msvc_version
       ModuleNotFoundError: No module named 'distutils.msvccompiler'
       [end of output]
@@ -459,9 +447,6 @@ error: metadata-generation-failed
 
 note: This is an issue with the package mentioned above, not pip.
 hint: See above for details.
-
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
 "
 https://github.com/TTMRonald/MobileNet_Zoo,No requirements found
 https://github.com/koshian2/affinity-loss,No requirements found
@@ -470,41 +455,41 @@ https://github.com/impredicative/irc-url-title-bot,"Failed:   error: subprocess-
   × Preparing metadata (pyproject.toml) did not run successfully.
   │ exit code: 1
   ╰─> [38 lines of output]
-      /tmp/pip-build-env-bg0ywi6b/overlay/lib/python3.11/site-packages/setuptools_scm/git.py:312: UserWarning: git archive did not support describe output
+      /private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-vyq7p36g/overlay/lib/python3.12/site-packages/setuptools_scm/git.py:312: UserWarning: git archive did not support describe output
         warnings.warn(""git archive did not support describe output"")
       WARNING setuptools_scm.pyproject_reading toml section missing 'pyproject.toml does not contain a tool.setuptools_scm section'
       Traceback (most recent call last):
-        File ""/tmp/pip-build-env-bg0ywi6b/overlay/lib/python3.11/site-packages/setuptools_scm/_integration/pyproject_reading.py"", line 36, in read_pyproject
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-vyq7p36g/overlay/lib/python3.12/site-packages/setuptools_scm/_integration/pyproject_reading.py"", line 36, in read_pyproject
           section = defn.get(""tool"", {})[tool_name]
                     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
       KeyError: 'setuptools_scm'
       Traceback (most recent call last):
-        File ""/tmp/tmpwmkfjpp7/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpxzooikcc/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
           main()
-        File ""/tmp/tmpwmkfjpp7/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpxzooikcc/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
           json_out['return_val'] = hook(**hook_input['kwargs'])
                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/tmpwmkfjpp7/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 149, in prepare_metadata_for_build_wheel
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpxzooikcc/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 149, in prepare_metadata_for_build_wheel
           return hook(metadata_directory, config_settings)
                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/pip-build-env-bg0ywi6b/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 373, in prepare_metadata_for_build_wheel
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-vyq7p36g/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 377, in prepare_metadata_for_build_wheel
           self.run_setup()
-        File ""/tmp/pip-build-env-bg0ywi6b/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 318, in run_setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-vyq7p36g/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 320, in run_setup
           exec(code, locals())
         File ""<string>"", line 66, in <module>
-        File ""/tmp/pip-build-env-bg0ywi6b/overlay/lib/python3.11/site-packages/setuptools/__init__.py"", line 117, in setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-vyq7p36g/overlay/lib/python3.12/site-packages/setuptools/__init__.py"", line 117, in setup
           return distutils.core.setup(**attrs)
                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/pip-build-env-bg0ywi6b/overlay/lib/python3.11/site-packages/setuptools/_distutils/core.py"", line 158, in setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-vyq7p36g/overlay/lib/python3.12/site-packages/setuptools/_distutils/core.py"", line 157, in setup
           dist.parse_config_files()
-        File ""/tmp/pip-build-env-bg0ywi6b/overlay/lib/python3.11/site-packages/setuptools/dist.py"", line 608, in parse_config_files
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-vyq7p36g/overlay/lib/python3.12/site-packages/setuptools/dist.py"", line 648, in parse_config_files
           pyprojecttoml.apply_configuration(self, filename, ignore_option_errors)
-        File ""/tmp/pip-build-env-bg0ywi6b/overlay/lib/python3.11/site-packages/setuptools/config/pyprojecttoml.py"", line 71, in apply_configuration
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-vyq7p36g/overlay/lib/python3.12/site-packages/setuptools/config/pyprojecttoml.py"", line 72, in apply_configuration
           config = read_configuration(filepath, True, ignore_option_errors, dist)
                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/pip-build-env-bg0ywi6b/overlay/lib/python3.11/site-packages/setuptools/config/pyprojecttoml.py"", line 139, in read_configuration
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-vyq7p36g/overlay/lib/python3.12/site-packages/setuptools/config/pyprojecttoml.py"", line 140, in read_configuration
           validate(subset, filepath)
-        File ""/tmp/pip-build-env-bg0ywi6b/overlay/lib/python3.11/site-packages/setuptools/config/pyprojecttoml.py"", line 60, in validate
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-vyq7p36g/overlay/lib/python3.12/site-packages/setuptools/config/pyprojecttoml.py"", line 61, in validate
           raise ValueError(f""{error}\n{summary}"") from None
       ValueError: invalid pyproject.toml config: `project`.
       configuration error: `project` must contain ['name'] properties
@@ -518,9 +503,6 @@ error: metadata-generation-failed
 
 note: This is an issue with the package mentioned above, not pip.
 hint: See above for details.
-
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
 "
 https://github.com/kevinroccapriore/Predictability,No requirements found
 https://github.com/kornia/kornia,No requirements found
@@ -539,22 +521,22 @@ https://github.com/sfu-gruvi-3dv/Self-Supervised-Human-Depth,"Failed:   error: s
       During handling of the above exception, another exception occurred:
       
       Traceback (most recent call last):
-        File ""/tmp/tmpar6bn9l0/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpy2_zcw9q/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
           main()
-        File ""/tmp/tmpar6bn9l0/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpy2_zcw9q/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
           json_out['return_val'] = hook(**hook_input['kwargs'])
                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/tmpar6bn9l0/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 118, in get_requires_for_build_wheel
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpy2_zcw9q/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 118, in get_requires_for_build_wheel
           return hook(config_settings)
                  ^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/pip-build-env-r9hyzmrz/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 332, in get_requires_for_build_wheel
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-54fidynb/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 334, in get_requires_for_build_wheel
           return self._get_build_requires(config_settings, requirements=[])
                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/pip-build-env-r9hyzmrz/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 302, in _get_build_requires
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-54fidynb/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 304, in _get_build_requires
           self.run_setup()
-        File ""/tmp/pip-build-env-r9hyzmrz/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 503, in run_setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-54fidynb/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 522, in run_setup
           super().run_setup(setup_script=setup_script)
-        File ""/tmp/pip-build-env-r9hyzmrz/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 318, in run_setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-54fidynb/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 320, in run_setup
           exec(code, locals())
         File ""<string>"", line 11, in <module>
       ModuleNotFoundError: No module named 'pip'
@@ -568,9 +550,6 @@ error: subprocess-exited-with-error
 ╰─> See above for output.
 
 note: This error originates from a subprocess, and is likely not a problem with pip.
-
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
 "
 https://github.com/alishdipani/Neural-Style-Transfer-Audio,No requirements found
 https://github.com/BroCoLySTyLe/SQLovaReview,No requirements found
@@ -581,10 +560,9 @@ https://github.com/tonghelen/JED-Method,No requirements found
 https://github.com/tianhai123/yolov3,No requirements found
 https://github.com/gitstevendeng/two-halves-statistically-different,No requirements found
 https://github.com/GeeLaw/bio-site,No requirements found
-https://github.com/adematti/pycute,"Failed: ERROR: Invalid requirement: 'scipy]' (from line 2 of /tmp/tmptpgr46gh)
-
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
+https://github.com/adematti/pycute,"Failed: ERROR: Invalid requirement: 'scipy]': Expected end or semicolon (after name and no valid version specifier)
+    scipy]
+         ^ (from line 2 of /var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpt20b4fcg)
 "
 https://github.com/kcmeehan/SmartDetect,No requirements found
 https://github.com/ethanhezhao/WEDTM,No requirements found
@@ -592,11 +570,105 @@ https://github.com/5m0k3/gwd-yolov5-pytorch,No requirements found
 https://github.com/mp2893/mime,No requirements found
 https://github.com/chengyangfu/pytorch-groupnormalization,No requirements found
 https://github.com/textlab/cglossa,No requirements found
-https://github.com/wangsen99/MMoFusion,"Failed: ERROR: Cannot install -r /tmp/tmp1qsgkreb (line 15) and numpy==1.19.5 because these package versions have conflicting dependencies.
-ERROR: ResolutionImpossible: for help visit https://pip.pypa.io/en/latest/topics/dependency-resolution/#dealing-with-dependency-conflicts
+https://github.com/wangsen99/MMoFusion,"Failed: ERROR: Exception:
+Traceback (most recent call last):
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_internal/cli/base_command.py"", line 105, in _run_wrapper
+    status = _inner_run()
+             ^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_internal/cli/base_command.py"", line 96, in _inner_run
+    return self.run(options, args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_internal/cli/req_command.py"", line 67, in wrapper
+    return func(self, options, args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_internal/commands/install.py"", line 379, in run
+    requirement_set = resolver.resolve(
+                      ^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_internal/resolution/resolvelib/resolver.py"", line 95, in resolve
+    result = self._result = resolver.resolve(
+                            ^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_vendor/resolvelib/resolvers.py"", line 546, in resolve
+    state = resolution.resolve(requirements, max_rounds=max_rounds)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_vendor/resolvelib/resolvers.py"", line 397, in resolve
+    self._add_to_criteria(self.state.criteria, r, parent=None)
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_vendor/resolvelib/resolvers.py"", line 173, in _add_to_criteria
+    if not criterion.candidates:
+           ^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_vendor/resolvelib/structs.py"", line 156, in __bool__
+    return bool(self._sequence)
+           ^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_internal/resolution/resolvelib/found_candidates.py"", line 174, in __bool__
+    return any(self)
+           ^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_internal/resolution/resolvelib/found_candidates.py"", line 162, in <genexpr>
+    return (c for c in iterator if id(c) not in self._incompatible_ids)
+                       ^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_internal/resolution/resolvelib/found_candidates.py"", line 53, in _iter_built
+    candidate = func()
+                ^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_internal/resolution/resolvelib/factory.py"", line 187, in _make_candidate_from_link
+    base: Optional[BaseCandidate] = self._make_base_candidate_from_link(
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_internal/resolution/resolvelib/factory.py"", line 233, in _make_base_candidate_from_link
+    self._link_candidate_cache[link] = LinkCandidate(
+                                       ^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_internal/resolution/resolvelib/candidates.py"", line 304, in __init__
+    super().__init__(
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_internal/resolution/resolvelib/candidates.py"", line 159, in __init__
+    self.dist = self._prepare()
+                ^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_internal/resolution/resolvelib/candidates.py"", line 236, in _prepare
+    dist = self._prepare_distribution()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_internal/resolution/resolvelib/candidates.py"", line 315, in _prepare_distribution
+    return preparer.prepare_linked_requirement(self._ireq, parallel_builds=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_internal/operations/prepare.py"", line 527, in prepare_linked_requirement
+    return self._prepare_linked_requirement(req, parallel_builds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_internal/operations/prepare.py"", line 642, in _prepare_linked_requirement
+    dist = _get_prepared_distribution(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_internal/operations/prepare.py"", line 72, in _get_prepared_distribution
+    abstract_dist.prepare_distribution_metadata(
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_internal/distributions/sdist.py"", line 56, in prepare_distribution_metadata
+    self._install_build_reqs(finder)
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_internal/distributions/sdist.py"", line 126, in _install_build_reqs
+    build_reqs = self._get_build_requires_wheel()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_internal/distributions/sdist.py"", line 103, in _get_build_requires_wheel
+    return backend.get_requires_for_build_wheel()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_internal/utils/misc.py"", line 701, in get_requires_for_build_wheel
+    return super().get_requires_for_build_wheel(config_settings=cs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_impl.py"", line 166, in get_requires_for_build_wheel
+    return self._call_hook('get_requires_for_build_wheel', {
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_impl.py"", line 321, in _call_hook
+    raise BackendUnavailable(data.get('traceback', ''))
+pip._vendor.pyproject_hooks._impl.BackendUnavailable: Traceback (most recent call last):
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpekrwwl3a/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 77, in _build_backend
+    obj = import_module(mod_path)
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/opt/homebrew/Cellar/python@3.12/3.12.8/Frameworks/Python.framework/Versions/3.12/lib/python3.12/importlib/__init__.py"", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""<frozen importlib._bootstrap>"", line 1387, in _gcd_import
+  File ""<frozen importlib._bootstrap>"", line 1360, in _find_and_load
+  File ""<frozen importlib._bootstrap>"", line 1310, in _find_and_load_unlocked
+  File ""<frozen importlib._bootstrap>"", line 488, in _call_with_frames_removed
+  File ""<frozen importlib._bootstrap>"", line 1387, in _gcd_import
+  File ""<frozen importlib._bootstrap>"", line 1360, in _find_and_load
+  File ""<frozen importlib._bootstrap>"", line 1331, in _find_and_load_unlocked
+  File ""<frozen importlib._bootstrap>"", line 935, in _load_unlocked
+  File ""<frozen importlib._bootstrap_external>"", line 999, in exec_module
+  File ""<frozen importlib._bootstrap>"", line 488, in _call_with_frames_removed
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-jvk18zzy/overlay/lib/python3.12/site-packages/setuptools/__init__.py"", line 9, in <module>
+    import distutils.core
+ModuleNotFoundError: No module named 'distutils'
 
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
 "
 https://github.com/kornai/4lang,No requirements found
 https://github.com/alexdominguez09/pedestrian_direction,No requirements found
@@ -604,10 +676,9 @@ https://github.com/beamandrew/BNN,No requirements found
 https://github.com/merrygoat/creep-sheared-gels,No requirements found
 https://github.com/rlworkgroup/garage,No matching distribution found
 https://github.com/ugent-korea/pytorch-unet-segmentation,No requirements found
-https://github.com/JoeMcEwen/FAST-PT,"Failed: ERROR: Invalid requirement: 'matplotlib]' (from line 3 of /tmp/tmpfrj6ek07)
-
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
+https://github.com/JoeMcEwen/FAST-PT,"Failed: ERROR: Invalid requirement: 'matplotlib]': Expected end or semicolon (after name and no valid version specifier)
+    matplotlib]
+              ^ (from line 3 of /var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmphui3tw9v)
 "
 https://github.com/nitarshan/robust-generalization-measures,Success
 https://github.com/freesunshine0316/semantic-nmt,No requirements found
@@ -645,33 +716,25 @@ error: subprocess-exited-with-error
 ╰─> See above for output.
 
 note: This error originates from a subprocess, and is likely not a problem with pip.
-
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
 "
 https://github.com/cgcl-codes/attack_ptmc,"Failed:   error: subprocess-exited-with-error
   
   × pip subprocess to install build dependencies did not run successfully.
   │ exit code: 1
-  ╰─> [68 lines of output]
-      Looking in indexes: https://pypi.org/simple, https://pypi.ngc.nvidia.com, https://pypi.ngc.nvidia.com
+  ╰─> [60 lines of output]
       Ignoring numpy: markers 'python_version == ""3.6"" and platform_system != ""AIX""' don't match your environment
       Ignoring numpy: markers 'python_version == ""3.7"" and platform_system != ""AIX""' don't match your environment
       Ignoring numpy: markers 'python_version == ""3.6"" and platform_system == ""AIX""' don't match your environment
       Ignoring numpy: markers 'python_version == ""3.7"" and platform_system == ""AIX""' don't match your environment
       Ignoring numpy: markers 'python_version >= ""3.8"" and platform_system == ""AIX""' don't match your environment
       Collecting setuptools
-        Downloading setuptools-74.1.2-py3-none-any.whl (1.3 MB)
-           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 530.5 kB/s eta 0:00:00
+        Using cached setuptools-75.6.0-py3-none-any.whl.metadata (6.7 kB)
       Collecting wheel
-        Downloading wheel-0.44.0-py3-none-any.whl (67 kB)
-           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 67.1/67.1 kB 1.4 MB/s eta 0:00:00
+        Using cached wheel-0.45.1-py3-none-any.whl.metadata (2.3 kB)
       Collecting Cython<3,>=0.29.21
-        Downloading Cython-0.29.37-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl (1.9 MB)
-           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.9/1.9 MB 894.4 kB/s eta 0:00:00
+        Using cached Cython-0.29.37-py2.py3-none-any.whl.metadata (3.1 kB)
       Collecting numpy==1.17.3
-        Downloading numpy-1.17.3.zip (6.4 MB)
-           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.4/6.4 MB 1.3 MB/s eta 0:00:00
+        Using cached numpy-1.17.3.zip (6.4 MB)
         Installing build dependencies: started
         Installing build dependencies: finished with status 'done'
         Getting requirements to build wheel: started
@@ -686,27 +749,27 @@ https://github.com/cgcl-codes/attack_ptmc,"Failed:   error: subprocess-exited-wi
             Running from numpy source directory.
             <string>:418: UserWarning: Unrecognized setuptools command, proceeding with generating Cython sources and expanding templates
             Traceback (most recent call last):
-              File ""/tmp/tmpkk24wg5h/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
+              File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpiidehiy6/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
                 main()
-              File ""/tmp/tmpkk24wg5h/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
+              File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpiidehiy6/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
                 json_out['return_val'] = hook(**hook_input['kwargs'])
                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-              File ""/tmp/tmpkk24wg5h/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 149, in prepare_metadata_for_build_wheel
+              File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpiidehiy6/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 149, in prepare_metadata_for_build_wheel
                 return hook(metadata_directory, config_settings)
                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-              File ""/tmp/pip-build-env-h1247hpm/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 373, in prepare_metadata_for_build_wheel
+              File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-ng7i_dwu/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 377, in prepare_metadata_for_build_wheel
                 self.run_setup()
-              File ""/tmp/pip-build-env-h1247hpm/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 503, in run_setup
+              File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-ng7i_dwu/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 522, in run_setup
                 super().run_setup(setup_script=setup_script)
-              File ""/tmp/pip-build-env-h1247hpm/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 318, in run_setup
+              File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-ng7i_dwu/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 320, in run_setup
                 exec(code, locals())
               File ""<string>"", line 443, in <module>
               File ""<string>"", line 422, in setup_package
-              File ""/tmp/pip-install-p040psa8/numpy_1e624c7a2a03432d9663f661e76cfcd1/numpy/distutils/core.py"", line 26, in <module>
+              File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-5kowabmg/numpy_3a15d62c12204040a818c153b548a13f/numpy/distutils/core.py"", line 26, in <module>
                 from numpy.distutils.command import config, config_compiler, \
-              File ""/tmp/pip-install-p040psa8/numpy_1e624c7a2a03432d9663f661e76cfcd1/numpy/distutils/command/config.py"", line 20, in <module>
+              File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-5kowabmg/numpy_3a15d62c12204040a818c153b548a13f/numpy/distutils/command/config.py"", line 20, in <module>
                 from numpy.distutils.mingw32ccompiler import generate_manifest
-              File ""/tmp/pip-install-p040psa8/numpy_1e624c7a2a03432d9663f661e76cfcd1/numpy/distutils/mingw32ccompiler.py"", line 34, in <module>
+              File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-5kowabmg/numpy_3a15d62c12204040a818c153b548a13f/numpy/distutils/mingw32ccompiler.py"", line 34, in <module>
                 from distutils.msvccompiler import get_build_version as get_build_msvc_version
             ModuleNotFoundError: No module named 'distutils.msvccompiler'
             [end of output]
@@ -719,9 +782,6 @@ https://github.com/cgcl-codes/attack_ptmc,"Failed:   error: subprocess-exited-wi
       
       note: This is an issue with the package mentioned above, not pip.
       hint: See above for details.
-      
-      [notice] A new release of pip is available: 23.1.2 -> 24.2
-      [notice] To update, run: python -m pip install --upgrade pip
       [end of output]
   
   note: This error originates from a subprocess, and is likely not a problem with pip.
@@ -732,9 +792,6 @@ error: subprocess-exited-with-error
 ╰─> See above for output.
 
 note: This error originates from a subprocess, and is likely not a problem with pip.
-
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
 "
 https://github.com/openai/generating-reviews-discovering-sentiment,No requirements found
 https://github.com/michael-goebel/ei_red,No matching distribution found
@@ -747,48 +804,59 @@ https://github.com/dineshzende/awesome-deep-learning-resources,No requirements f
 https://github.com/alfredvc/paac,No requirements found
 https://github.com/MLOPTPSU/FedTorch,"Failed:   error: subprocess-exited-with-error
   
-  × Preparing metadata (pyproject.toml) did not run successfully.
+  × Getting requirements to build wheel did not run successfully.
   │ exit code: 1
-  ╰─> [26 lines of output]
-      Running from numpy source directory.
-      <string>:461: UserWarning: Unrecognized setuptools command, proceeding with generating Cython sources and expanding templates
+  ╰─> [40 lines of output]
+      <string>:32: SetuptoolsDeprecationWarning: The test command is disabled and references to it are deprecated.
+      !!
+      
+              ********************************************************************************
+              Please remove any references to `setuptools.command.test` in all supported versions of the affected package.
+      
+              This deprecation is overdue, please update your project and remove deprecated
+              calls to avoid build errors in the future.
+              ********************************************************************************
+      
+      !!
       Traceback (most recent call last):
-        File ""/tmp/tmp0xjyzbnn/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmphszi7mn0/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
           main()
-        File ""/tmp/tmp0xjyzbnn/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmphszi7mn0/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
           json_out['return_val'] = hook(**hook_input['kwargs'])
                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/tmp0xjyzbnn/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 149, in prepare_metadata_for_build_wheel
-          return hook(metadata_directory, config_settings)
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/pip-build-env-w4mmrbgu/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 373, in prepare_metadata_for_build_wheel
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmphszi7mn0/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 118, in get_requires_for_build_wheel
+          return hook(config_settings)
+                 ^^^^^^^^^^^^^^^^^^^^^
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-hpywsm_6/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 334, in get_requires_for_build_wheel
+          return self._get_build_requires(config_settings, requirements=[])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-hpywsm_6/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 304, in _get_build_requires
           self.run_setup()
-        File ""/tmp/pip-build-env-w4mmrbgu/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 503, in run_setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-hpywsm_6/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 522, in run_setup
           super().run_setup(setup_script=setup_script)
-        File ""/tmp/pip-build-env-w4mmrbgu/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 318, in run_setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-hpywsm_6/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 320, in run_setup
           exec(code, locals())
-        File ""<string>"", line 488, in <module>
-        File ""<string>"", line 465, in setup_package
-        File ""/tmp/pip-install-yl5xyha5/numpy_35a8624e64194a81b26a522f9bee3520/numpy/distutils/core.py"", line 26, in <module>
-          from numpy.distutils.command import config, config_compiler, \
-        File ""/tmp/pip-install-yl5xyha5/numpy_35a8624e64194a81b26a522f9bee3520/numpy/distutils/command/config.py"", line 20, in <module>
-          from numpy.distutils.mingw32ccompiler import generate_manifest
-        File ""/tmp/pip-install-yl5xyha5/numpy_35a8624e64194a81b26a522f9bee3520/numpy/distutils/mingw32ccompiler.py"", line 34, in <module>
-          from distutils.msvccompiler import get_build_version as get_build_msvc_version
-      ModuleNotFoundError: No module named 'distutils.msvccompiler'
+        File ""<string>"", line 52, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-qbqurdjm/matplotlib_396c0c00bf69411297acc90bb6f52e14/versioneer.py"", line 1410, in get_version
+          return get_versions()[""version""]
+                 ^^^^^^^^^^^^^^
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-qbqurdjm/matplotlib_396c0c00bf69411297acc90bb6f52e14/versioneer.py"", line 1344, in get_versions
+          cfg = get_config_from_root(root)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-install-qbqurdjm/matplotlib_396c0c00bf69411297acc90bb6f52e14/versioneer.py"", line 401, in get_config_from_root
+          parser = configparser.SafeConfigParser()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      AttributeError: module 'configparser' has no attribute 'SafeConfigParser'. Did you mean: 'RawConfigParser'?
       [end of output]
   
   note: This error originates from a subprocess, and is likely not a problem with pip.
-error: metadata-generation-failed
+error: subprocess-exited-with-error
 
-× Encountered error while generating package metadata.
+× Getting requirements to build wheel did not run successfully.
+│ exit code: 1
 ╰─> See above for output.
 
-note: This is an issue with the package mentioned above, not pip.
-hint: See above for details.
-
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
+note: This error originates from a subprocess, and is likely not a problem with pip.
 "
 https://github.com/shangtse/robust-physical-attack,No requirements found
 https://github.com/jsztompka/MultiAgent-PPO,No requirements found
@@ -799,22 +867,22 @@ https://github.com/ratschlab/boosting-bbvi,"Failed:   error: subprocess-exited-w
   │ exit code: 1
   ╰─> [20 lines of output]
       Traceback (most recent call last):
-        File ""/tmp/tmpfue0stkp/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpytbn4f14/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
           main()
-        File ""/tmp/tmpfue0stkp/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpytbn4f14/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
           json_out['return_val'] = hook(**hook_input['kwargs'])
                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/tmpfue0stkp/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 118, in get_requires_for_build_wheel
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpytbn4f14/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 118, in get_requires_for_build_wheel
           return hook(config_settings)
                  ^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/pip-build-env-b17wxt5v/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 332, in get_requires_for_build_wheel
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-51omrftt/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 334, in get_requires_for_build_wheel
           return self._get_build_requires(config_settings, requirements=[])
                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/pip-build-env-b17wxt5v/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 302, in _get_build_requires
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-51omrftt/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 304, in _get_build_requires
           self.run_setup()
-        File ""/tmp/pip-build-env-b17wxt5v/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 503, in run_setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-51omrftt/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 522, in run_setup
           super().run_setup(setup_script=setup_script)
-        File ""/tmp/pip-build-env-b17wxt5v/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 318, in run_setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-51omrftt/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 320, in run_setup
           exec(code, locals())
         File ""<string>"", line 32, in <module>
       RuntimeError: Python version 2.7 or 3.4+ is required.
@@ -828,9 +896,6 @@ error: subprocess-exited-with-error
 ╰─> See above for output.
 
 note: This error originates from a subprocess, and is likely not a problem with pip.
-
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
 "
 https://github.com/astoycos/Mini_Project2,No requirements found
 https://github.com/RGLab/scamp,No requirements found
@@ -873,22 +938,22 @@ https://github.com/newalexander/supervised-cadres,"Failed:   error: subprocess-e
   │ exit code: 1
   ╰─> [20 lines of output]
       Traceback (most recent call last):
-        File ""/tmp/tmp45rbos2p/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpg2631b1c/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
           main()
-        File ""/tmp/tmp45rbos2p/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpg2631b1c/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
           json_out['return_val'] = hook(**hook_input['kwargs'])
                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/tmp45rbos2p/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 118, in get_requires_for_build_wheel
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpg2631b1c/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 118, in get_requires_for_build_wheel
           return hook(config_settings)
                  ^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/pip-build-env-ahlweefu/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 332, in get_requires_for_build_wheel
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-d3vhghs7/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 334, in get_requires_for_build_wheel
           return self._get_build_requires(config_settings, requirements=[])
                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File ""/tmp/pip-build-env-ahlweefu/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 302, in _get_build_requires
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-d3vhghs7/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 304, in _get_build_requires
           self.run_setup()
-        File ""/tmp/pip-build-env-ahlweefu/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 503, in run_setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-d3vhghs7/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 522, in run_setup
           super().run_setup(setup_script=setup_script)
-        File ""/tmp/pip-build-env-ahlweefu/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 318, in run_setup
+        File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-d3vhghs7/overlay/lib/python3.12/site-packages/setuptools/build_meta.py"", line 320, in run_setup
           exec(code, locals())
         File ""<string>"", line 34, in <module>
       RuntimeError: Python version 2.7 or 3.4+ is required.
@@ -902,9 +967,6 @@ error: subprocess-exited-with-error
 ╰─> See above for output.
 
 note: This error originates from a subprocess, and is likely not a problem with pip.
-
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
 "
 https://github.com/saransh317/YOLOv3-Easy-Implementation,No requirements found
 https://github.com/qubole/qubole-log-datasets,No requirements found
@@ -916,92 +978,105 @@ https://github.com/Gauravshahare/ADVERSIAL_AUTOENCODER,No requirements found
 https://github.com/njross/optimizer,No requirements found
 https://github.com/HarukiYqM/Non-Local-Sparse-Attention,No requirements found
 https://github.com/misho104/susy_cross_section,No requirements found
-https://github.com/cc-rmd-epibio/domain-adaptation-meta-analysis,"Failed:   error: subprocess-exited-with-error
-  
-  × pip subprocess to install build dependencies did not run successfully.
-  │ exit code: 1
-  ╰─> [68 lines of output]
-      Looking in indexes: https://pypi.org/simple, https://pypi.ngc.nvidia.com, https://pypi.ngc.nvidia.com
-      Ignoring numpy: markers 'python_version == ""3.6"" and platform_system != ""AIX""' don't match your environment
-      Ignoring numpy: markers 'python_version == ""3.7"" and platform_system != ""AIX""' don't match your environment
-      Ignoring numpy: markers 'python_version == ""3.6"" and platform_system == ""AIX""' don't match your environment
-      Ignoring numpy: markers 'python_version == ""3.7"" and platform_system == ""AIX""' don't match your environment
-      Ignoring numpy: markers 'python_version >= ""3.8"" and platform_system == ""AIX""' don't match your environment
-      Collecting wheel
-        Downloading wheel-0.44.0-py3-none-any.whl (67 kB)
-           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 67.1/67.1 kB 695.5 kB/s eta 0:00:00
-      Collecting setuptools
-        Downloading setuptools-74.1.2-py3-none-any.whl (1.3 MB)
-           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 1.7 MB/s eta 0:00:00
-      Collecting Cython>=0.29.18
-        Downloading Cython-3.0.11-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.6 MB)
-           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.6/3.6 MB 1.4 MB/s eta 0:00:00
-      Collecting numpy==1.17.3
-        Downloading numpy-1.17.3.zip (6.4 MB)
-           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.4/6.4 MB 1.0 MB/s eta 0:00:00
-        Installing build dependencies: started
-        Installing build dependencies: finished with status 'done'
-        Getting requirements to build wheel: started
-        Getting requirements to build wheel: finished with status 'done'
-        Preparing metadata (pyproject.toml): started
-        Preparing metadata (pyproject.toml): finished with status 'error'
-        error: subprocess-exited-with-error
-      
-        × Preparing metadata (pyproject.toml) did not run successfully.
-        │ exit code: 1
-        ╰─> [26 lines of output]
-            Running from numpy source directory.
-            <string>:418: UserWarning: Unrecognized setuptools command, proceeding with generating Cython sources and expanding templates
-            Traceback (most recent call last):
-              File ""/tmp/tmpx2xtuspm/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 353, in <module>
-                main()
-              File ""/tmp/tmpx2xtuspm/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 335, in main
-                json_out['return_val'] = hook(**hook_input['kwargs'])
-                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-              File ""/tmp/tmpx2xtuspm/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 149, in prepare_metadata_for_build_wheel
-                return hook(metadata_directory, config_settings)
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-              File ""/tmp/pip-build-env-y21nnypu/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 373, in prepare_metadata_for_build_wheel
-                self.run_setup()
-              File ""/tmp/pip-build-env-y21nnypu/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 503, in run_setup
-                super().run_setup(setup_script=setup_script)
-              File ""/tmp/pip-build-env-y21nnypu/overlay/lib/python3.11/site-packages/setuptools/build_meta.py"", line 318, in run_setup
-                exec(code, locals())
-              File ""<string>"", line 443, in <module>
-              File ""<string>"", line 422, in setup_package
-              File ""/tmp/pip-install-pcy4chhw/numpy_d76d00ed4f5944d49a887823d6a73219/numpy/distutils/core.py"", line 26, in <module>
-                from numpy.distutils.command import config, config_compiler, \
-              File ""/tmp/pip-install-pcy4chhw/numpy_d76d00ed4f5944d49a887823d6a73219/numpy/distutils/command/config.py"", line 20, in <module>
-                from numpy.distutils.mingw32ccompiler import generate_manifest
-              File ""/tmp/pip-install-pcy4chhw/numpy_d76d00ed4f5944d49a887823d6a73219/numpy/distutils/mingw32ccompiler.py"", line 34, in <module>
-                from distutils.msvccompiler import get_build_version as get_build_msvc_version
-            ModuleNotFoundError: No module named 'distutils.msvccompiler'
-            [end of output]
-      
-        note: This error originates from a subprocess, and is likely not a problem with pip.
-      error: metadata-generation-failed
-      
-      × Encountered error while generating package metadata.
-      ╰─> See above for output.
-      
-      note: This is an issue with the package mentioned above, not pip.
-      hint: See above for details.
-      
-      [notice] A new release of pip is available: 23.1.2 -> 24.2
-      [notice] To update, run: python -m pip install --upgrade pip
-      [end of output]
-  
-  note: This error originates from a subprocess, and is likely not a problem with pip.
-error: subprocess-exited-with-error
+https://github.com/cc-rmd-epibio/domain-adaptation-meta-analysis,"Failed: ERROR: Exception:
+Traceback (most recent call last):
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_internal/cli/base_command.py"", line 105, in _run_wrapper
+    status = _inner_run()
+             ^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_internal/cli/base_command.py"", line 96, in _inner_run
+    return self.run(options, args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_internal/cli/req_command.py"", line 67, in wrapper
+    return func(self, options, args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_internal/commands/install.py"", line 379, in run
+    requirement_set = resolver.resolve(
+                      ^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_internal/resolution/resolvelib/resolver.py"", line 95, in resolve
+    result = self._result = resolver.resolve(
+                            ^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_vendor/resolvelib/resolvers.py"", line 546, in resolve
+    state = resolution.resolve(requirements, max_rounds=max_rounds)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_vendor/resolvelib/resolvers.py"", line 397, in resolve
+    self._add_to_criteria(self.state.criteria, r, parent=None)
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_vendor/resolvelib/resolvers.py"", line 173, in _add_to_criteria
+    if not criterion.candidates:
+           ^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_vendor/resolvelib/structs.py"", line 156, in __bool__
+    return bool(self._sequence)
+           ^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_internal/resolution/resolvelib/found_candidates.py"", line 174, in __bool__
+    return any(self)
+           ^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_internal/resolution/resolvelib/found_candidates.py"", line 162, in <genexpr>
+    return (c for c in iterator if id(c) not in self._incompatible_ids)
+                       ^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_internal/resolution/resolvelib/found_candidates.py"", line 53, in _iter_built
+    candidate = func()
+                ^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_internal/resolution/resolvelib/factory.py"", line 187, in _make_candidate_from_link
+    base: Optional[BaseCandidate] = self._make_base_candidate_from_link(
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_internal/resolution/resolvelib/factory.py"", line 233, in _make_base_candidate_from_link
+    self._link_candidate_cache[link] = LinkCandidate(
+                                       ^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_internal/resolution/resolvelib/candidates.py"", line 304, in __init__
+    super().__init__(
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_internal/resolution/resolvelib/candidates.py"", line 159, in __init__
+    self.dist = self._prepare()
+                ^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_internal/resolution/resolvelib/candidates.py"", line 236, in _prepare
+    dist = self._prepare_distribution()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_internal/resolution/resolvelib/candidates.py"", line 315, in _prepare_distribution
+    return preparer.prepare_linked_requirement(self._ireq, parallel_builds=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_internal/operations/prepare.py"", line 527, in prepare_linked_requirement
+    return self._prepare_linked_requirement(req, parallel_builds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_internal/operations/prepare.py"", line 642, in _prepare_linked_requirement
+    dist = _get_prepared_distribution(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_internal/operations/prepare.py"", line 72, in _get_prepared_distribution
+    abstract_dist.prepare_distribution_metadata(
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_internal/distributions/sdist.py"", line 56, in prepare_distribution_metadata
+    self._install_build_reqs(finder)
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_internal/distributions/sdist.py"", line 126, in _install_build_reqs
+    build_reqs = self._get_build_requires_wheel()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_internal/distributions/sdist.py"", line 103, in _get_build_requires_wheel
+    return backend.get_requires_for_build_wheel()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_internal/utils/misc.py"", line 701, in get_requires_for_build_wheel
+    return super().get_requires_for_build_wheel(config_settings=cs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_impl.py"", line 166, in get_requires_for_build_wheel
+    return self._call_hook('get_requires_for_build_wheel', {
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_impl.py"", line 321, in _call_hook
+    raise BackendUnavailable(data.get('traceback', ''))
+pip._vendor.pyproject_hooks._impl.BackendUnavailable: Traceback (most recent call last):
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpkqc9tc9m/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py"", line 77, in _build_backend
+    obj = import_module(mod_path)
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/opt/homebrew/Cellar/python@3.12/3.12.8/Frameworks/Python.framework/Versions/3.12/lib/python3.12/importlib/__init__.py"", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""<frozen importlib._bootstrap>"", line 1387, in _gcd_import
+  File ""<frozen importlib._bootstrap>"", line 1360, in _find_and_load
+  File ""<frozen importlib._bootstrap>"", line 1310, in _find_and_load_unlocked
+  File ""<frozen importlib._bootstrap>"", line 488, in _call_with_frames_removed
+  File ""<frozen importlib._bootstrap>"", line 1387, in _gcd_import
+  File ""<frozen importlib._bootstrap>"", line 1360, in _find_and_load
+  File ""<frozen importlib._bootstrap>"", line 1331, in _find_and_load_unlocked
+  File ""<frozen importlib._bootstrap>"", line 935, in _load_unlocked
+  File ""<frozen importlib._bootstrap_external>"", line 999, in exec_module
+  File ""<frozen importlib._bootstrap>"", line 488, in _call_with_frames_removed
+  File ""/private/var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/pip-build-env-gn1q3a92/overlay/lib/python3.12/site-packages/setuptools/__init__.py"", line 9, in <module>
+    import distutils.core
+ModuleNotFoundError: No module named 'distutils'
 
-× pip subprocess to install build dependencies did not run successfully.
-│ exit code: 1
-╰─> See above for output.
-
-note: This error originates from a subprocess, and is likely not a problem with pip.
-
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
 "
 https://github.com/sylvchev/dataset-ssvep-exoskeleton,No requirements found
 https://github.com/johnsonkee/graduate_design,No requirements found
@@ -1012,11 +1087,10 @@ https://github.com/nmeripo/Reducing-the-Dimensionality-of-Data-with-Neural-Netwo
 https://github.com/hannorein/oec_outreach,No requirements found
 https://github.com/Stick-To/RefineDet-tensorflow,No requirements found
 https://github.com/MindSpore-paper-code-3/code8/tree/main/FaceQualityAssessment,No requirements found
-https://github.com/PaulAlbert31/LabelNoiseCorrection,"Failed: ERROR: Invalid requirement: 'blas=1.0=mkl' (from line 1 of /tmp/tmptj_hgw6a)
+https://github.com/PaulAlbert31/LabelNoiseCorrection,"Failed: ERROR: Invalid requirement: 'blas=1.0=mkl': Expected end or semicolon (after name and no valid version specifier)
+    blas=1.0=mkl
+        ^ (from line 1 of /var/folders/94/9pgns_s52bs1szs3my5xd3jc0000gn/T/tmpxks_ut0x)
 Hint: = is not a valid operator. Did you mean == ?
-
-[notice] A new release of pip is available: 23.1.2 -> 24.2
-[notice] To update, run: python -m pip install --upgrade pip
 "
 https://github.com/andyxingxl/Deformable-generator,No requirements found
 https://github.com/vicdolean/schwarz,No requirements found

@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 import requests
 import pandas as pd
@@ -7,6 +8,10 @@ import tempfile
 from tqdm import tqdm
 import yaml
 import glob
+
+result = subprocess.check_output("git rev-parse --show-toplevel", shell=True).decode('utf-8')
+ROOT = result.strip()
+
 
 def fetch_file(repo_url, file_name, branches=["main", "master"]):
     for branch in branches:
@@ -46,15 +51,15 @@ def parse_conda_env(conda_content):
 def install_requirements(requirements_content):
     try:
         with tempfile.TemporaryDirectory() as env_dir:
-            subprocess.run(["python", "-m", "venv", env_dir], check=True)
+            subprocess.run(["python3", "-m", "venv", env_dir], check=True)
             pip_executable = os.path.join(env_dir, "bin", "pip") if os.name != 'nt' else os.path.join(env_dir, "Scripts", "pip")
-            
+
             with tempfile.NamedTemporaryFile(delete=False, mode='w') as temp_req_file:
                 temp_req_file.write(requirements_content)
                 temp_req_file.flush()
-                
+
                 result = subprocess.run([pip_executable, "install", "-r", temp_req_file.name], capture_output=True, text=True)
-                
+
                 if result.returncode != 0:
                     return False, result.stderr
                 return True, None
@@ -71,10 +76,10 @@ def check_repo(repo):
             conda_env = fetch_file(repo, "environment.yml") or fetch_file(repo, "environment.yaml")
             if conda_env:
                 requirements = parse_conda_env(conda_env)
-    
+
     if not requirements:
         return repo, "No requirements found"
-    
+
     success, error = install_requirements(requirements)
     if success:
         return repo, "Success"
@@ -96,7 +101,7 @@ def check_local_requirements(requirements_files):
         try:
             with open(req_file, 'r') as f:
                 requirements_content = f.read()
-            
+
             success, error = install_requirements(requirements_content)
             if success:
                 results[req_file] = "Success"
@@ -107,25 +112,30 @@ def check_local_requirements(requirements_files):
                     results[req_file] = f"Failed: {error}"
         except Exception as e:
             results[req_file] = f"Error reading file: {str(e)}"
-    
+
     return results
 
 if __name__ == "__main__":
-    import sys
-
     if len(sys.argv) > 1 and sys.argv[1] == "--local":
         # Check local requirements files
+        # FIXME: Replace with the actual path to the requirements files
+        # git ls-files | grep requirements.txt
+        # status of 0 means success (found 1+ requirements files)
+        # os.path.walk ...
         requirements_files = glob.glob("path/to/requirements/*.txt")
         results = check_local_requirements(requirements_files)
     else:
         # Check GitHub repositories
-        df = pd.read_csv("paper_repo_info.csv")
+
+        filepath = os.path.join(ROOT, "runcheck", "paper_repo_info.csv")
+        df = pd.read_csv(filepath)
         repos = df["repo_url"].tolist()
         results = check_repos(repos)
 
     # Create a DataFrame with the results
     results_df = pd.DataFrame(list(results.items()), columns=["file_or_repo", "status"])
-    
+
     # Write results to a CSV file
-    results_df.to_csv("build_check_results.csv", index=False)
+    output_file = os.path.join(ROOT, "runcheck", "build_check_results.csv")
+    results_df.to_csv(output_file, index=False)
 

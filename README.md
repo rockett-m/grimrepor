@@ -30,6 +30,37 @@ Over time, dependencies fall apart, versions get cranky, and your code starts ga
 
 ---
 
+## Setup
+
+### Create and activate a virtual environment:
+
+Create virtual environment
+```bash
+python3.12 -m venv venv
+```
+
+Activate virtual environment
+```bash
+source venv/bin/activate
+```
+
+Install required packages:
+```bash
+(venv) pip install -r requirements.txt
+```
+
+Run python script(s)
+```bash
+(venv) python3 runcheck/build_check.py
+```
+
+To deactivate the virtual environment when you're done:
+```bash
+(venv) deactivate
+```
+
+---
+
 ## Get Involved
 
 Need help with a new repository? Submit it to Grim Repor, and we’ll fix those dead dependencies for you.

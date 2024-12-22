@@ -1,9 +1,13 @@
+import os
+import subprocess
 import requests
 import pandas as pd
 
 # Search term for the repository
 REPO_NAME = "huggingface/transformers"  # replace with your repository search term
 SEARCH_URL = f"https://api.github.com/search/repositories?q={REPO_NAME}"
+result = subprocess.check_output("git rev-parse --show-toplevel", shell=True).decode('utf-8')
+ROOT = result.strip()
 
 # Optional: Use your GitHub token for higher rate limits
 # HEADERS = {
@@ -47,7 +51,8 @@ if search_response.status_code == 200:
                 break
 
         df = pd.DataFrame(issue_list)
-        df.to_csv("issues.csv", index=False)
+        file_issues = os.path.join(ROOT, "runcheck", "issues.csv")
+        df.to_csv(file_issues, index=False)
     else:
         print("No repositories found.")
 else:
