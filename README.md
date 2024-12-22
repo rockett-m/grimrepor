@@ -19,6 +19,43 @@ Give us a new repo, and we’ll put it’s back in action. We are dedicated to k
 2. **Fix & Upgrade**: We automatically fix version mismatches, upgrade dead dependencies, and ensure compatibility with modern environments.
 3. **Deliver Working Code**: Once the fixes are in place, we provide a working version of your repository — so you and your users can focus on research, not debugging.
 
+
+
+## Our methodology in detail
+Most of the workflow below occurs in `runcheck/build_check.py`.
+
+- Run thru the repos we have available. 
+    - Presently: These are in `runcheck/paper_repo_info.csv`
+    - Future improvement: we will source this more dynamically
+- For each available repos assess what they use for dependency resolution to produce a list of packages that must be installed via `pip`:
+    - Presently: `requirements.txt`, `environment.yml` (conda), and `setup.py`  based repos are supported. Other systems result in a "No requirements found" message
+    - Future improvement: Expand to support other depedency/build systems (Docker, etc.)
+    - Future improvement: Actually pull the GitHub repo (currently we just fetch the dependency file)
+- Attempt to install required packages:
+    - Presently: Create a new venv in a temp directory based on the `requirements.txt`. If pip is able to install all the required packages we call this a "Success"
+- On install failure:
+    - Attempt to fix using techniques (`runcheck/process_errors.py`):
+        - Check the date of the last commit and assume that the project built/ran then. Set dependency versions to the latest release at that point in time (findable via pypi's `Release History` page (ex: https://pypi.org/project/numpy/#history))
+        - Check for duplicate entries for a given dependency
+        - Check for mis-spelling of common
+    - Attempt to a re-install
+- Attempt to build:
+    - Presently: Some projects may require an actual build step (vs being purely interpreted). At present none of this is considered.
+- Verify functionality 
+    - Presently: Does not appear to happen at all
+- Store results of the workflow (that is subsequently used by other files)
+    - Presently: Results are stored in `runcheck/build_check_results.csv`
+    - Future: Something more robust like a SQLite DB
+
+
+`runcheck/build_check_results.csv` is used as an input to:
+- `runcheck/new_repo.py`.
+    - TODO: This script seems to not do much. Clones repos, but doesn't do any actual checks...
+- `runcheck/process_errors.py`
+    - This implements the fixes.
+    - Seems like it needs some work around Forking, pushing, creating a PR.
+
+
 ---
 
 ## Why Choose Grim Repor?
