@@ -1,3 +1,5 @@
+import os
+import subprocess
 import pandas as pd
 
 # Assuming df is your DataFrame containing GitHub issues
@@ -5,10 +7,10 @@ import pandas as pd
 
 keywords = [
     'version conflict', 'pip issue', 'version mismatch', 'python version mismatch',
-    'module not found', 'import error', 'attribute error', 'deprecated', 
-    'incompatible version', 'requires version', 'unsupported version', 
-    'version not supported', 'version error', 'version not found', 
-    'version not installed', 'version requirement', 'version constraint', 
+    'module not found', 'import error', 'attribute error', 'deprecated',
+    'incompatible version', 'requires version', 'unsupported version',
+    'version not supported', 'version error', 'version not found',
+    'version not installed', 'version requirement', 'version constraint',
     'version dependency', 'version incompatibility', 'version issue',
     "pip install", "pip upgrade", "pip uninstall", "pip install --upgrade",
     "pip install --user", "pip install --system", "pip install --target",
@@ -29,7 +31,11 @@ def classify_issues(df):
     df['is_version_issue'] = df.apply(check_issue, axis=1)
     return df
 
-df  = pd.read_csv('issues.csv')
+result = subprocess.check_output("git rev-parse --show-toplevel", shell=True).decode('utf-8')
+ROOT = result.strip()
+file_issues = os.path.join(ROOT, "runcheck", "issues.csv")
+df  = pd.read_csv(file_issues)
 df = classify_issues(df)
-df.to_csv('issues_classified.csv', index=False)
+output_file = os.path.join(ROOT, "runcheck", "issues_classified.csv")
+df.to_csv(output_file, index=False)
 print(df[['title', 'is_version_issue']])

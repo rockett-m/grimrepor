@@ -1,5 +1,5 @@
-import asyncio
 import sys
+import asyncio
 from twikit import Client
 
 # Your Twitter account credentials

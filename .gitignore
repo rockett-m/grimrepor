@@ -60,6 +60,7 @@ ENV/
 env.bak/
 venv.bak/
 *.env
+venv/
 
 # Jupyter Notebook
 .ipynb_checkpoints

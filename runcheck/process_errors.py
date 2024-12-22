@@ -1,15 +1,18 @@
-import pandas as pd
+import os
+import subprocess
+import time
 from github import Github
 import requests
-import time
 from dotenv import load_dotenv
-import os
 import instructor
 from pydantic import BaseModel
 from openai import OpenAI
+import pandas as pd
 
 # Load environment variables from .env file
 load_dotenv()
+result = subprocess.check_output("git rev-parse --show-toplevel", shell=True).decode('utf-8')
+ROOT = result.strip()
 
 # Get GitHub personal access token and OpenAI API key from environment variables
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
@@ -185,7 +188,8 @@ def process_repository(repo_url):
         return None
 
 # Read the build_check_results.csv file
-df = pd.read_csv("build_check_results.csv")
+filepath = os.path.join(ROOT, "runcheck", "build_check_results.csv")
+df = pd.read_csv(filepath)
 
 # Filter the repositories that do not have "success" status
 error_repos = df[~df['status'].str.contains("success", case=False)]['file_or_repo'].tolist()
@@ -201,6 +205,7 @@ for repo_url in error_repos:
 
 # Convert the results to a DataFrame and save as CSV
 results_df = pd.DataFrame(results)
-results_df.to_csv("updated_requirements_results.csv", index=False)
+output_file = os.path.join(ROOT, "runcheck", "updated_requirements_results.csv")
+results_df.to_csv(output_file, index=False)
 
 print("The updated requirements have been saved to updated_requirements_results.csv")
