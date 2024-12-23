@@ -22,10 +22,10 @@ Give us a new repo, and we’ll put it’s back in action. We are dedicated to k
 
 
 ## Our methodology in detail
-Most of the workflow below occurs in `runcheck/build_check.py`.
+Most of the workflow below occurs in `scripts/build_check.py`.
 
 - Run thru the repos we have available. 
-    - Presently: These are in `runcheck/paper_repo_info.csv`
+    - Presently: These are in `scripts/paper_repo_info.csv`
     - Future improvement: we will source this more dynamically
 - For each available repos assess what they use for dependency resolution to produce a list of packages that must be installed via `pip`:
     - Presently: `requirements.txt`, `environment.yml` (conda), and `setup.py`  based repos are supported. Other systems result in a "No requirements found" message
@@ -34,7 +34,7 @@ Most of the workflow below occurs in `runcheck/build_check.py`.
 - Attempt to install required packages:
     - Presently: Create a new venv in a temp directory based on the `requirements.txt`. If pip is able to install all the required packages we call this a "Success"
 - On install failure:
-    - Attempt to fix using techniques (`runcheck/process_errors.py`):
+    - Attempt to fix using techniques (`scripts/process_errors.py`):
         - Check the date of the last commit and assume that the project built/ran then. Set dependency versions to the latest release at that point in time (findable via pypi's `Release History` page (ex: https://pypi.org/project/numpy/#history))
         - Check for duplicate entries for a given dependency
         - Check for mis-spelling of common
@@ -44,14 +44,14 @@ Most of the workflow below occurs in `runcheck/build_check.py`.
 - Verify functionality 
     - Presently: Does not appear to happen at all
 - Store results of the workflow (that is subsequently used by other files)
-    - Presently: Results are stored in `runcheck/build_check_results.csv`
+    - Presently: Results are stored in `output/build_check_results.csv`
     - Future: Something more robust like a SQLite DB
 
 
-`runcheck/build_check_results.csv` is used as an input to:
-- `runcheck/new_repo.py`.
+`output/build_check_results.csv` is used as an input to:
+- `scripts/new_repo.py`.
     - TODO: This script seems to not do much. Clones repos, but doesn't do any actual checks...
-- `runcheck/process_errors.py`
+- `scripts/process_errors.py`
     - This implements the fixes.
     - Seems like it needs some work around Forking, pushing, creating a PR.
 
@@ -88,7 +88,7 @@ Install required packages:
 
 Run python script(s)
 ```bash
-(venv) python3 runcheck/build_check.py
+(venv) python3 scripts/build_check.py
 ```
 
 To deactivate the virtual environment when you're done:

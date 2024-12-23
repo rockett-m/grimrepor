@@ -188,7 +188,7 @@ def process_repository(repo_url):
         return None
 
 # Read the build_check_results.csv file
-filepath = os.path.join(ROOT, "runcheck", "build_check_results.csv")
+filepath = os.path.join(ROOT, "output", "build_check_results.csv")
 df = pd.read_csv(filepath)
 
 # Filter the repositories that do not have "success" status
@@ -205,7 +205,7 @@ for repo_url in error_repos:
 
 # Convert the results to a DataFrame and save as CSV
 results_df = pd.DataFrame(results)
-output_file = os.path.join(ROOT, "runcheck", "updated_requirements_results.csv")
+output_file = os.path.join(ROOT, "output", "updated_requirements_results.csv")
 results_df.to_csv(output_file, index=False)
 
 print("The updated requirements have been saved to updated_requirements_results.csv")

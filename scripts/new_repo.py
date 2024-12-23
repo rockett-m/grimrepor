@@ -53,7 +53,7 @@ def build_check():
     return success, fixed, json_data
 
 # List of GitHub repositories
-filepath = os.path.join(ROOT, "runcheck", "build_check_results.csv")
+filepath = os.path.join(ROOT, "output", "build_check_results.csv")
 df = pd.read_csv(filepath)
 repos_list = list(df.itertuples(index=False, name=None))
 
@@ -74,7 +74,7 @@ for repo, status in repos_list:
 
     # Create a new directory for the repo and move into it
 
-    repo_dir = os.path.join(ROOT, "runcheck", f"{repo_name}_dir")
+    repo_dir = os.path.join(ROOT, "output", f"{repo_name}_dir")
     os.makedirs(repo_dir, exist_ok=True)
     os.chdir(repo_dir)
 
