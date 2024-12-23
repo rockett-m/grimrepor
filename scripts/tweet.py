@@ -7,12 +7,12 @@ please make sure you add a delay on your side between calls.
 
 Usage:
     1. Command line:
-        python tweet.py owner_name repo_name
-        Example: python tweet.py nikhilbrijlal my-repo
+        python tweet.py owner_name repo_name repo_url
+        Example: python tweet.py nikhilbrijlal my-repo https://github.com/nikhilbrijlal/my-repo
 
     2. Import as module:
         from tweet import main
-        await main(owner_name="nikhilbrijlal", repo_name="my-repo")
+        await main(owner_name="nikhilbrijlal", repo_name="my-repo", repo_url="https://github.com/nikhilbrijlal/my-repo")
 
     3. Testing (uses default values):
         python tweet.py
@@ -28,7 +28,7 @@ import sys
 from datetime import datetime
 
 
-async def main(owner_name=None, repo_name=None):
+async def main(owner_name=None, repo_name=None, repo_url=None):
     # Load environment variables
     load_dotenv()
     
@@ -51,14 +51,17 @@ async def main(owner_name=None, repo_name=None):
         owner_name = sys.argv[1]
     if repo_name is None and len(sys.argv) > 2:
         repo_name = sys.argv[2]
+    if repo_url is None and len(sys.argv) > 3:
+        repo_url = sys.argv[3]
     
     # Default values for testing if no arguments provided
     owner_name = owner_name or "test-person"
     repo_name = repo_name or "test-repo"
+    repo_url = repo_url or "https://github.com/test-person/test-repo"
 
     # Create tweet text with timestamp
     current_time = datetime.now().strftime("%H:%M:%S")
-    TWEET_TEXT = f"Hey, @{owner_name}, your repository: {repo_name} can no longer be built! We went ahead and fixed this for you. ❤️ Grim Repo-r"
+    TWEET_TEXT = f"Hey, @{owner_name}, your repository: {repo_name} can no longer be built! We went ahead and fixed this for you at {repo_url} ❤️ Grim Repo-r"
 
     print("Waiting for 10 seconds before posting the tweet...")
     await asyncio.sleep(10)
