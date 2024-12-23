@@ -51,7 +51,7 @@ if search_response.status_code == 200:
                 break
 
         df = pd.DataFrame(issue_list)
-        file_issues = os.path.join(ROOT, "runcheck", "issues.csv")
+        file_issues = os.path.join(ROOT, "output", "issues.csv")
         df.to_csv(file_issues, index=False)
     else:
         print("No repositories found.")

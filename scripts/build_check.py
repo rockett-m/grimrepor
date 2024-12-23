@@ -127,7 +127,7 @@ if __name__ == "__main__":
     else:
         # Check GitHub repositories
 
-        filepath = os.path.join(ROOT, "runcheck", "paper_repo_info.csv")
+        filepath = os.path.join(ROOT, "output", "paper_repo_info.csv")
         df = pd.read_csv(filepath)
         repos = df["repo_url"].tolist()
         results = check_repos(repos)
@@ -136,6 +136,6 @@ if __name__ == "__main__":
     results_df = pd.DataFrame(list(results.items()), columns=["file_or_repo", "status"])
 
     # Write results to a CSV file
-    output_file = os.path.join(ROOT, "runcheck", "build_check_results.csv")
+    output_file = os.path.join(ROOT, "output", "build_check_results.csv")
     results_df.to_csv(output_file, index=False)
 

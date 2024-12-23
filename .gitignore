@@ -1,5 +1,8 @@
 # Output directory
 output/
+!output/*.csv
+!output/*.html
+
 
 # Node.js
 node_modules/
