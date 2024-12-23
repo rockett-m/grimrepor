@@ -2,8 +2,8 @@
 Twitter Bot for Repository Notifications
 
 This script posts tweets to notify repository owners about build issues.
-VERY IMPORTANT! There's a 100 post per 15 minute period limit from the API,
-please make sure you add a delay on your side between calls.
+VERY IMPORTANT! There's a 17 post per 24 hour period limit.
+Please make sure you add a delay on your side between calls.
 
 Usage:
     1. Command line:
