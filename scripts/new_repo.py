@@ -5,8 +5,7 @@ import shutil
 import requests
 import pandas as pd
 
-result = subprocess.check_output("git rev-parse --show-toplevel", shell=True).decode('utf-8')
-ROOT = result.strip()
+ROOT = subprocess.check_output("git rev-parse --show-toplevel", shell=True).decode('utf-8').strip()
 
 # GitHub API URL for creating repositories
 GITHUB_API_URL = "https://api.github.com/user/repos"

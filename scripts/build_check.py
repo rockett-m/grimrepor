@@ -9,8 +9,7 @@ from tqdm import tqdm
 import yaml
 import glob
 
-result = subprocess.check_output("git rev-parse --show-toplevel", shell=True).decode('utf-8')
-ROOT = result.strip()
+ROOT = subprocess.check_output("git rev-parse --show-toplevel", shell=True).decode('utf-8').strip()
 
 
 def fetch_file(repo_url, file_name, branches=["main", "master"]):
@@ -126,8 +125,7 @@ if __name__ == "__main__":
         results = check_local_requirements(requirements_files)
     else:
         # Check GitHub repositories
-
-        filepath = os.path.join(ROOT, "output", "paper_repo_info.csv")
+        filepath = os.path.join(ROOT, "data", "paper_repo_info.csv")
         df = pd.read_csv(filepath)
         repos = df["repo_url"].tolist()
         results = check_repos(repos)
@@ -138,4 +136,3 @@ if __name__ == "__main__":
     # Write results to a CSV file
     output_file = os.path.join(ROOT, "output", "build_check_results.csv")
     results_df.to_csv(output_file, index=False)
-

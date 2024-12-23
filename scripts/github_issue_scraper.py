@@ -6,8 +6,7 @@ import pandas as pd
 # Search term for the repository
 REPO_NAME = "huggingface/transformers"  # replace with your repository search term
 SEARCH_URL = f"https://api.github.com/search/repositories?q={REPO_NAME}"
-result = subprocess.check_output("git rev-parse --show-toplevel", shell=True).decode('utf-8')
-ROOT = result.strip()
+ROOT = subprocess.check_output("git rev-parse --show-toplevel", shell=True).decode('utf-8').strip()
 
 # Optional: Use your GitHub token for higher rate limits
 # HEADERS = {
@@ -42,9 +41,10 @@ if search_response.status_code == 200:
                     temp["title"] = issue["title"]
                     temp["body"] = issue["body"]
                     temp["labels"] = issue["labels"]
-                    temp["comments"] = issue["comments"]
+                    temp["comments_count"] = issue["comments"]
                     temp["state"] = issue["state"]  # Check if the issue is closed
                     issue_list.append(temp)
+
                 page += 1
             else:
                 print(f"Failed to retrieve issues: {issues_response.status_code}")

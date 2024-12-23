@@ -16,6 +16,9 @@ logs/
 *.log
 *.log.*
 
+# IDE
+*.code-workspace
+
 # Dependency directories
 node_modules/
 jspm_packages/
@@ -72,7 +75,7 @@ venv/
 .ipynb_checkpoints
 
 # macOS
-.DS_Store
+*.DS_Store
 
 # Windows
 Thumbs.db
