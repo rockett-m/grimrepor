@@ -7,7 +7,7 @@ const csvWriter = require('csv-write-stream');
 // Retrieve the GitHub personal access token from the .env file
 const GITHUB_ACCESS_TOKEN = process.env.GITHUB_ACCESS_TOKEN;
 
-// Helper function to extract owner and repository name from repo_url
+// Helper function to extract owner and repository name from repoUrl
 function extractOwnerRepo(repoUrl) {
   const regex = /github\.com\/([^\/]+)\/([^\/]+)/;
   const match = repoUrl.match(regex);
@@ -91,12 +91,12 @@ async function getRepoDataFromUrl(repoUrl) {
 
     // Return repo information
     return {
-      readmeUrl: readmeExists,
-      requirementsUrl: requirementsExists,
-      requirementsLastCommitDate: requirementsLastCommitDate || 'None',
-      mostProminentLanguage,
+      readme_url: readmeExists,
+      requirements_url: requirementsExists,
+      requirements_last_commit_date: requirementsLastCommitDate || 'None',
+      most_prominent_language: mostProminentLanguage,
       stars,
-      lastCommitDate,
+      last_commit_date: lastCommitDate,
       contributors: contributors.join(', '),
     };
   } catch (error) {
@@ -122,7 +122,22 @@ async function processPapersAndSaveToCSV(offset = 0) {
     }
 
     // Initialize the CSV writer
-    const writer = csvWriter({ headers: ['paper_title', 'paper_url', 'paper_arxiv_id', 'repo_url', 'is_official', 'framework', 'readmeUrl', 'requirementsUrl', 'requirementsLastCommitDate', 'mostProminentLanguage', 'stars', 'lastCommitDate', 'contributors'] });
+    const writer = csvWriter({ headers: [
+      'paper_title',
+      'paper_url',
+      'paper_arxiv_id',
+      'repo_url',
+      'is_official',
+      'framework',
+      'readme_url',
+      'requirements_url',
+      'requirements_last_commit_date',
+      'most_prominent_language',
+      'stars',
+      'last_commit_date',
+      'contributors'
+    ]});
+
     const csvFilePath = path.join(__dirname, 'paper_repo_info.csv');
     writer.pipe(fs.createWriteStream(csvFilePath, { flags: 'a' })); // Append mode
 
@@ -134,9 +149,9 @@ async function processPapersAndSaveToCSV(offset = 0) {
     for (let i = offset; i < paperDataList.length; i++) {
       const paperData = paperDataList[i];
 
-      if (paperData.repo_url) {
+      if (paperData.repoUrl) {
         // Fetch repo information
-        const repoInfo = await getRepoDataFromUrl(paperData.repo_url);
+        const repoInfo = await getRepoDataFromUrl(paperData.repoUrl);
 
         if (repoInfo) {
           // Merge paper data with repo info and write to CSV
@@ -144,7 +159,7 @@ async function processPapersAndSaveToCSV(offset = 0) {
             paper_title: paperData.paper_title,
             paper_url: paperData.paper_url,
             paper_arxiv_id: paperData.paper_arxiv_id,
-            repo_url: paperData.repo_url,
+            repo_url: paperData.repoUrl,
             is_official: paperData.is_official,
             framework: paperData.framework,
             ...repoInfo,

@@ -11,8 +11,7 @@ import pandas as pd
 
 # Load environment variables from .env file
 load_dotenv()
-result = subprocess.check_output("git rev-parse --show-toplevel", shell=True).decode('utf-8')
-ROOT = result.strip()
+ROOT = subprocess.check_output("git rev-parse --show-toplevel", shell=True).decode('utf-8').strip()
 
 # Get GitHub personal access token and OpenAI API key from environment variables
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
