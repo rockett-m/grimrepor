@@ -1,15 +1,18 @@
 import os
 import sys
+import re
 import subprocess
 import pandas as pd
+import requests
 import json
 import mysqlx
 from datetime import datetime
-
-
+from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 
 load_dotenv()
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+
 ROOT = subprocess.check_output("git rev-parse --show-toplevel", shell=True).decode('utf-8').strip()
 OS = sys.platform
 if OS != 'linux' and OS != 'darwin':
@@ -283,84 +286,14 @@ def delete_data_from_table(table_name: str, db_name: str = "grimrepor_db") -> bo
     finally:
         session.close()
 
-
-create_table_dict = {
-    "papers_and_code_linked": """
-    CREATE TABLE IF NOT EXISTS papers_and_code_linked (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        paper_url VARCHAR(255) NOT NULL UNIQUE,
-        paper_title VARCHAR(255) NOT NULL UNIQUE,
-        paper_arxiv_id VARCHAR(255) NOT NULL UNIQUE,
-        paper_url_abs VARCHAR(255) NOT NULL UNIQUE,
-        paper_url_pdf VARCHAR(255) NOT NULL UNIQUE,
-        repo_url VARCHAR(255),
-        is_official BOOLEAN,
-        mentioned_in_paper BOOLEAN,
-        mentioned_in_github BOOLEAN,
-        framework VARCHAR(255)
-    );""",
-
-    "paper_repo_info_reqs": """
-    CREATE TABLE IF NOT EXISTS paper_repo_info_reqs (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        paper_title VARCHAR(255) NOT NULL,
-        paper_url VARCHAR(255) NOT NULL,
-        paper_arxiv_id VARCHAR(255) NOT NULL,
-        repo_url VARCHAR(255) NOT NULL,
-        is_official BOOLEAN NOT NULL,
-        framework VARCHAR(255) DEFAULT NULL,
-        readme_url VARCHAR(255) DEFAULT NULL,
-        requirements_url VARCHAR(255) DEFAULT NULL,
-        requirements_last_commit_date DATE DEFAULT NULL,
-        most_prominent_language VARCHAR(255) DEFAULT NULL,
-        stars INT DEFAULT 0,
-        last_commit_date DATE DEFAULT NULL,
-        contributors VARCHAR(1000),
-        requirements MEDIUMTEXT
-    );""",
-
-    # original fields:
-    # "Title", "Link", "Author Info", "Abstract", "Tasks", "GitHub Link", "Star Count"
-    "papers_data": """
-    CREATE TABLE IF NOT EXISTS papers_data (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        title VARCHAR(255) NOT NULL,
-        paper_url VARCHAR(255) NOT NULL,
-        author_info VARCHAR(255) DEFAULT NULL,
-        abstract TEXT,
-        tasks VARCHAR(255) DEFAULT NULL,
-        github_url VARCHAR(255) DEFAULT NULL,
-        stars INT DEFAULT 0
-    );""",
-
-    "build_check_results": """
-    CREATE TABLE IF NOT EXISTS build_check_results (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        file_or_repo VARCHAR(255) NOT NULL UNIQUE,
-        status TEXT
-    );""",
-    # updated_requirements TEXT
-    # FOREIGN KEY (file_or_repo) REFERENCES papers(repo_url)
-
-    "issues_classified": """
-    CREATE TABLE IF NOT EXISTS issues_classified (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        title VARCHAR(255) NOT NULL,
-        body TEXT,
-        labels VARCHAR(1000) DEFAULT NULL,
-        comments_count INT DEFAULT 0,
-        state VARCHAR(255) DEFAULT 'open',
-        is_version_issue BOOLEAN DEFAULT FALSE
-    );""",
-
-    "updated_requirements": """
-    CREATE TABLE IF NOT EXISTS updated_requirements (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        github_url VARCHAR(255) NOT NULL,
-        updated_requirements MEDIUMTEXT
-    );"""
-    # FOREIGN KEY (github_url) REFERENCES papers(repo_url)
-}
+def escape_value(value):
+    """
+    helper function to prepare data for SQL table insertion
+    """
+    if value is None:
+        return 'NULL'
+    # escape single quotes and backslashes
+    return "'" + str(value).replace("'", "''").replace("\\", "\\\\") + "'"
 
 
 class Table:
@@ -370,30 +303,7 @@ class Table:
         # database has to work before creating tables
         # create_db(db_name=db_name)
 
-    # def create_table_broken(self, create_table_cmd: str) -> bool:
-    #     """
-    #     create a table in the database
-    #     note that in create session, the database is selected
-    #     """
-    #     session, schema = create_session(self.db_name)
-    #     if not session: return False
-
-    #     output = schema.get_table(self.table_name)
-    #     if output:
-    #         print(f"Table {self.table_name} already exists.{output.get_name() = }\n")
-    #         return True
-
-    #     try:
-    #         session.sql(create_table_cmd).execute()
-    #         print(f"Table {self.table_name} created successfully.")
-    #         return True
-    #     except Exception as e:
-    #         print(f"Error creating table: {str(e)}")
-    #         return False
-    #     finally:
-    #         session.close()
-
-    def create_table(self, create_table_cmd: str) -> bool:
+    def create_table_full(self) -> bool:
         """
         create a table in the database
         note that in create session, the database is selected
@@ -402,12 +312,41 @@ class Table:
         if not session:
             return False
 
+        create_table_cmd = f"""
+        CREATE TABLE IF NOT EXISTS {self.table_name} (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+
+            paper_title VARCHAR(255) NOT NULL UNIQUE,
+            paper_arxiv_id VARCHAR(255) DEFAULT NULL UNIQUE,
+            paper_arxiv_url VARCHAR(255) DEFAULT NULL UNIQUE,
+            paper_pwc_url VARCHAR(255) DEFAULT NULL UNIQUE,
+            github_url VARCHAR(255) DEFAULT NULL UNIQUE,
+
+            contributors VARCHAR(255) DEFAULT NULL,
+            build_sys_type VARCHAR(255) DEFAULT NULL,
+            deps_file_url VARCHAR(255) DEFAULT NULL UNIQUE,
+            deps_file_content_orig MEDIUMTEXT,
+            deps_last_commit_date DATE DEFAULT NULL,
+
+            build_status_orig VARCHAR(255) DEFAULT NULL,
+            deps_file_content_edited MEDIUMTEXT,
+            build_status_edited VARCHAR(255) DEFAULT NULL,
+            datetime_latest_build DATETIME DEFAULT NULL,
+            num_build_attempts INT DEFAULT 0,
+            py_valid_versions VARCHAR(255) DEFAULT NULL,
+
+            github_fork_url VARCHAR(255) DEFAULT NULL UNIQUE,
+            pushed_to_fork BOOLEAN DEFAULT FALSE,
+            pull_request_made BOOLEAN DEFAULT FALSE,
+            tweet_posted BOOLEAN DEFAULT FALSE,
+            tweet_url VARCHAR(255) DEFAULT NULL UNIQUE
+        );"""
         try:
             # Check if the table exists
             table_exists = False
             tables = schema.get_tables()
             for table in tables:
-                if table.get_name().lower() == self.table_name.lower():
+                if table.get_name() == self.table_name:
                     table_exists = True
                     break
 
@@ -425,7 +364,7 @@ class Table:
         finally:
             session.close()
 
-    def populate_table_papers_and_code_linked(self) -> bool:
+    def populate_table_from_papers_and_code_json(self, row_limit: int = None) -> bool:
         """
         populate the table with data from data/links-between-papers-and-code.json
         sample:
@@ -441,6 +380,19 @@ class Table:
             "mentioned_in_github": false,
             "framework": "pytorch"
         },
+        fill these fields of the table:
+        paper_title VARCHAR(255) NOT NULL UNIQUE,
+        paper_arxiv_id VARCHAR(255) DEFAULT NULL UNIQUE,
+        paper_arxiv_url VARCHAR(255) DEFAULT NULL UNIQUE,
+        paper_pwc_url VARCHAR(255) NOT NULL UNIQUE,
+        github_url VARCHAR(255) NOT NULL,
+
+        # db_column : json_col
+        # 'paper_title' : 'paper_title',
+        # 'paper_arxiv_id' : 'paper_arxiv_id',
+        # 'paper_arxiv_url' : 'paper_url_abs',
+        # 'paper_pwc_url' : 'paper_url',
+        # 'github_url' : 'repo_url'
 
         Not all rows are inserted due to unique and not null constraints
         clashes mainly on paper_url, paper_arxiv_id
@@ -449,237 +401,58 @@ class Table:
         session, schema = create_session(self.db_name)
         if not session: return False
 
-        columns = [
-            "paper_url",
-            "paper_title",
-            "paper_arxiv_id",
-            "paper_url_abs",
-            "paper_url_pdf",
-            "repo_url",
-            "is_official",
-            "mentioned_in_paper",
-            "mentioned_in_github",
-            "framework"
-        ]
-
-        rows_inserted = 0
         file_loc = os.path.join(ROOT, "data", "links-between-papers-and-code.json")
         data = None
         with open(file_loc, 'r', encoding='ascii') as f:
             data = json.load(f)
 
         table = schema.get_table(self.table_name)
+        rows_inserted, rows_skipped = 0, 0
 
         try:
             for idx, row in enumerate(data):
-                row_values = [str(row.get(col, "")) for col in columns]
-                # boolean tinyint(1) type; set true = 1, false = 0 to fit the schema
-                for i in range(6, 9):
-                    if row_values[i].lower() == "true":
-                        row_values[i] = 1
-                    elif row_values[i].lower() == "false":
-                        row_values[i] = 0
+                if row_limit and idx >= row_limit: break
+
+                # convert string to dict if needed
+                if isinstance(row, str):
+                    try:
+                        row = json.loads(row)
+                    except json.JSONDecodeError as e:
+                        print(f"Error parsing row #{idx}: {str(e)}")
+                        continue
+
+                if not row.get('paper_url_abs'):
+                    print(f"Skipping row #{idx}: Missing required paper_pwc_url")
+                    rows_skipped += 1
+                    continue
+
+                values = [
+                    escape_value(row.get('paper_title')),
+                    escape_value(row.get('paper_arxiv_id')),
+                    escape_value(row.get('paper_url_abs')),
+                    escape_value(row.get('paper_url')),
+                    escape_value(row.get('repo_url')),
+                ]
+                insert_update_cmd = f"""
+                INSERT INTO {self.table_name} (
+                    paper_title, paper_arxiv_id, paper_arxiv_url, paper_pwc_url, github_url
+                ) VALUES (
+                    {values[0]}, {values[1]}, {values[2]}, {values[3]}, {values[4]}
+                )"""
                 try:
-                    schema.get_table(self.table_name).insert(columns).values(row_values).execute()
-                    table.insert(columns).values(row_values).execute()
+                    session.sql(insert_update_cmd).execute()
+                    session.commit()
                     rows_inserted += 1
                 except Exception as e:
                     print(f"Error inserting row #{idx}: {str(e)}")
-                    continue
-                print("{*}" * 120, f"\nrows parsed: {idx}\n", "{*}" * 120)
-
-            print(f"Rows inserted: {rows_inserted} of attempted {len(data)}")
-            print(f"Total rows: {table.count()}")
-
-        except Exception as e:
-            print(f"Error populating table: {str(e)}")
-            return False
-        finally:
-            session.close()
-        return True
-
-    def populate_table_paper_repo_info_reqs(self) -> bool:
-        r"""
-        populate the table with data from data/paper_repo_info+reqs.json
-
-        sample:
-        ```
-        {
-            "paper_title": "AttnGAN: Fine-Grained Text to Image Generation with Attentional Generative Adversarial Networks",
-            "paper_url": "https://paperswithcode.com/paper/attngan-fine-grained-text-to-image-generation",
-            "paper_arxiv_id": "1711.10485",
-            "repo_url": "https://github.com/bprabhakar/text-to-image",
-            "is_official": "false",
-            "framework": "pytorch",
-            "readmeUrl": "https://raw.githubusercontent.com/bprabhakar/text-to-image/master/README.md",
-            "requirementsUrl": "https://raw.githubusercontent.com/bprabhakar/text-to-image/master/requirements.txt",
-            "requirementsLastCommitDate": "2018-05-30T01:01:19Z",
-            "mostProminentLanguage": "Jupyter Notebook",
-            "stars": "17",
-            "lastCommitDate": "2018-05-30T01:28:48Z",
-            "contributors": "https://github.com/bprabhakar",
-            "requirements": "Flask\npython-dateutil\neasydict\nscikit-image\nazure-storage-blob\napplicationinsights\nlibmc"
-        }
-        ```
-        """
-
-        session, schema = create_session(self.db_name)
-        if not session: return False
-
-        # Define the mapping between JSON keys (camelCase) and database columns (snake_case)
-        key_mapping = {
-            "paper_title": "paper_title",
-            "paper_url": "paper_url",
-            "paper_arxiv_id": "paper_arxiv_id",
-            "repo_url": "repo_url",
-            "is_official": "is_official",
-            "framework": "framework",
-            "readmeUrl": "readme_url",
-            "requirementsUrl": "requirements_url",
-            "requirementsLastCommitDate": "requirements_last_commit_date",
-            "mostProminentLanguage": "most_prominent_language",
-            "stars": "stars",
-            "lastCommitDate": "last_commit_date",
-            "contributors": "contributors",
-            "requirements": "requirements"
-        }
-
-        columns = [
-            "paper_title",
-            "paper_url",
-            "paper_arxiv_id",
-            "repo_url",
-            "is_official",
-            "framework",
-            "readme_url",
-            "requirements_url",
-            "requirements_last_commit_date",
-            "most_prominent_language",
-            "stars",
-            "last_commit_date",
-            "contributors",
-            "requirements"
-        ]
-
-        # Function to convert JSON keys to database column names
-        def convert_keys(row, key_mapping):
-            converted_row = {}
-            for json_key, db_key in key_mapping.items():
-                if json_key in row:
-                    converted_row[db_key] = row[json_key]
-                else:
-                    converted_row[db_key] = None
-            return converted_row
-
-
-        rows_inserted = 0
-        file_loc = os.path.join(ROOT, "data", "paper_repo_info+reqs.json")
-        data = None
-        # with open(file_loc, 'r', encoding='utf-8') as f:
-        with open(file_loc, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-
-        table = schema.get_table(self.table_name)
-
-        # there may be empty columns
-        try:
-            for idx, row in enumerate(data):
-                # Convert JSON keys to database column names
-                field_dict = convert_keys(row, key_mapping)
-                # prepare data to conform to the schema
-                row_values = []
-
-                for col in columns:
-                    if col.lower().endswith("date"):
-                        try:
-                            date_value = datetime.strptime(field_dict[col], "%Y-%m-%dT%H:%M:%SZ").date()
-                            row_values.append(date_value.strftime("%Y-%m-%d"))  # Convert date to string
-                        except (ValueError, TypeError):
-                            row_values.append(None)
-                    elif col == "is_official":
-                        row_values.append(1 if field_dict[col] == "true" else 0)
-                    elif col == "stars":
-                        row_values.append(int(field_dict[col]) if field_dict[col] is not None else 0)
-                    else:
-                        row_values.append(field_dict[col])
-
-                # Insert the row into the database
-                try:
-                    table.insert(columns).values(row_values).execute()
-                    rows_inserted += 1
-                except Exception as e:
-                    print(f"Error inserting row #{idx}: {str(e)}")
+                    rows_skipped += 1
                     continue
 
-            print(f"Rows inserted: {rows_inserted} of attempted {len(data)}")
-            print(f"Total rows: {table.count()}")
-
-        except Exception as e:
-            print(f"Error populating table: {str(e)}")
-            # return False
-        finally:
-            session.close()
-        return True
-
-    def populate_table_papers_data(self) -> bool:
-        """
-        populate the table with data from data/papers_data.json
-        in csv format so it can be read as a dataframe
-        or converted to json
-
-        sample:
-        ```
-        Title                Sapiens: Foundation for Human Vision Models
-        Link           https://paperswithcode.com/paper/sapiens-found...
-        Author Info            facebookresearch/sapiens •  • 22 Aug 2024
-        Abstract       We present Sapiens, a family of models for fou...
-        Tasks                        2D Pose Estimation|Depth Estimation
-        GitHub Link          https://github.com/facebookresearch/sapiens
-        Star Count                                                 3,686
-        """
-        session, schema = create_session(self.db_name)
-        if not session: return False
-
-        columns = [
-            "title", "paper_url", "author_info", "abstract", "tasks", "github_url", "stars"
-        ]
-
-        rows_inserted = 0
-        file_loc = os.path.join(ROOT, "data", "papers_data.csv")
-
-        data = None
-        with open(file_loc, 'r', encoding='utf-8') as f:
-            data = pd.read_csv(f)
-
-        table = schema.get_table(self.table_name)
-
-        try:
-            for idx, row in data.iterrows():
-                row = row.to_dict()
-                for k, v in row.items():
-                    # convert NaN to None
-                    if pd.isna(v):
-                        row[k] = None
-                    # strip leading/trailing whitespace if the value is a string
-                    elif isinstance(v, str):
-                        row[k] = v.strip()
-                    # remove commas from star count and convert to int
-                    if k == "Star Count":
-                        if row[k] is None or row[k] == "None" or row[k] == "":
-                            row[k] = 0
-                        else:
-                            row[k] = int(row[k].replace(",", ""))
-                try:
-                    # print(f'Inserting row #{idx}: {list(row.values())}')
-                    table.insert(columns).values(list(row.values())).execute()
-                    rows_inserted += 1
-                except Exception as e:
-                    print(f"Error inserting row #{idx}: {str(e)}")
-                    continue
-
-            print(f"Rows inserted: {rows_inserted} of attempted {len(data)}")
+            if row_limit:
+                print(f"Rows inserted: {rows_inserted}, Rows skipped: {rows_skipped} of attempted {row_limit}")
+            else:
+                print(f"Rows inserted: {rows_inserted}, Rows skipped: {rows_skipped} of attempted {len(data)}")
             print(f"Total rows in table: {table.count()}")
-
         except Exception as e:
             print(f"Error populating table: {str(e)}")
             return False
@@ -687,212 +460,286 @@ class Table:
             session.close()
         return True
 
-    def populate_table_build_check_results(self) -> bool:
+    def convert_to_mysql_date(self, iso_datetime):
         """
-        populate the table with data from output/build_check_results.csv
-        only has 'file_or_repo', 'status' fields
-        sample:
-        github_link	updated_requirements
-        https://github.com/Maymaher/StackGANv2
-        "torch==1.0.0 torchvision==0.2.1 numpy==1.15.1 lmdb==0.94
-            easydict==1.9 six==1.11.0 requests==2.19.1 pandas==0.23.4
-            Pillow==5.4.1 python_dateutil==2.7.5 tensorboardX==1.6
-            PyYAML==3.13"
+        Convert ISO 8601 datetime (e.g., '2018-05-30T01:01:19Z') to MySQL DATE format ('2018-05-30').
+        """
+        try:
+            # Parse the ISO 8601 datetime string
+            dt = datetime.strptime(iso_datetime, "%Y-%m-%dT%H:%M:%SZ")
+            # Return in MySQL-compatible DATE format
+            return dt.strftime("%Y-%m-%d")
+        except Exception as e:
+            print(f"Error converting datetime value: {iso_datetime} - {str(e)}")
+            return None
+
+    def extract_owner_repo(self, github_url):
+        """
+        Extract owner and repository name from the GitHub URL.
+        helper function for populate_table_github_api
+        """
+        regex = r"github\.com\/([^\/]+)\/([^\/]+)"
+        match = re.search(regex, github_url)
+        if match:
+            return match.groups()
+        return None
+
+    def get_contributors(self, owner, repo):
+        """
+        Fetch contributors from the GitHub repository.
+        helper function for populate_table_github_api
+        """
+        contributors_url = f"https://api.github.com/repos/{owner}/{repo}/contributors"
+
+        # Get GitHub token from environment variable
+        try:
+            headers = {}
+            if GITHUB_TOKEN:
+                headers['Authorization'] = f'token {GITHUB_TOKEN}'
+            else:
+                print(f"Warning: No GitHub token found. Rate limits will be strict.")
+
+            response = requests.get(contributors_url, headers=headers)
+
+            # Check rate limits from response headers
+            rate_limit = response.headers.get('X-RateLimit-Remaining', 'N/A')
+            rate_reset = response.headers.get('X-RateLimit-Reset', 'N/A')
+            if rate_reset != 'N/A':
+                reset_time = datetime.fromtimestamp(int(rate_reset)).strftime('%Y-%m-%d %H:%M:%S')
+            else:
+                reset_time = 'N/A'
+
+            if response.status_code == 403:
+                if rate_limit == '0':
+                    print(f"\nGitHub API rate limit exceeded!")
+                    print(f"Rate limit will reset at: {reset_time}")
+                else:
+                    print(f"\nRepository {owner}/{repo} access forbidden (403)")
+                    print(f"This might be a private repository or the token might not have sufficient permissions")
+                return None
+            elif response.status_code == 404:
+                print(f"\nRepository {owner}/{repo} not found (404)")
+                print(f"The repository might have been deleted or renamed")
+                return None
+            elif response.status_code == 200:
+                contributors = [contributor['login'] for contributor in response.json()]
+                if not contributors:
+                    print(f"\nNo contributors found for {owner}/{repo}")
+                    return None
+                return ', '.join(contributors)
+            else:
+                print(f"\nError fetching contributors for {owner}/{repo}")
+                print(f"Status code: {response.status_code}")
+                print(f"Remaining API calls: {rate_limit}")
+                print(f"Rate limit resets at: {reset_time}")
+                return None
+
+        except requests.exceptions.RequestException as e:
+            print(f"\nNetwork error fetching contributors for {owner}/{repo}")
+            print(f"Error: {str(e)}")
+            return None
+        except Exception as e:
+            print(f"\nUnexpected error fetching contributors for {owner}/{repo}")
+            print(f"Error: {str(e)}")
+            return None
+
+    def get_file_content(self, file_url):
+        """
+        Fetch the content of a file from the given URL.
+        Prioritize raw user content; fallback to alternative paths if raw URL fails.
+        """
+        try:
+            # Convert GitHub blob URL to raw URL if necessary
+            raw_file_url = (
+                file_url.replace('github.com', 'raw.githubusercontent.com')
+                        .replace('/blob/', '/')
+                if 'github.com' in file_url and '/blob/' in file_url
+                else file_url
+            )
+
+            # Attempt to fetch raw file content
+            response = requests.get(raw_file_url)
+            if response.status_code == 200:
+                return response.text
+
+            # If raw URL fails, fallback to the original blob URL
+            response = requests.get(file_url)
+            if response.status_code == 200:
+                soup = BeautifulSoup(response.text, 'html.parser')
+                code_element = soup.find('table', {'class': 'highlight'}) or soup.find('pre')
+                if code_element:
+                    return code_element.get_text()
+
+            # If all attempts fail, try common alternative branches for raw content
+            if 'github.com' in file_url:
+                parts = file_url.split('github.com/')[1].split('/')
+                owner, repo = parts[0], parts[1]
+                req_files = ['requirements.txt']
+                branches = ['main', 'master']
+
+                for branch in branches:
+                    for req_file in req_files:
+                        alt_raw_url = f"https://raw.githubusercontent.com/{owner}/{repo}/{branch}/{req_file}"
+                        alt_response = requests.get(alt_raw_url)
+                        if alt_response.status_code == 200:
+                            return alt_response.text
+
+            return None
+
+        except Exception as e:
+            print(f"Error fetching file content from {file_url}: {str(e)}")
+            return None
+
+    def get_last_commit_date(self, owner, repo, file_path):
+        """
+        Fetch the last commit date for a specific file in a GitHub repository.
+        """
+        try:
+            for branch in ['main', 'master']:
+                commits_url = f"https://api.github.com/repos/{owner}/{repo}/commits?path={file_path}&sha={branch}&per_page=1"
+                response = requests.get(commits_url, headers={'Authorization': f'token {GITHUB_TOKEN}'})
+                if response.status_code == 200:
+                    commit_data = response.json()
+                    if commit_data:
+                        return self.convert_to_mysql_date(commit_data[0].get('commit', {}).get('author', {}).get('date', None))
+            return None  # No valid commit date found
+        except Exception as e:
+            print(f"Error fetching last commit date for {file_path} in {owner}/{repo}: {str(e)}")
+            return None
+
+    def populate_table_from_github_repo(self, row_limit: int = None) -> bool:
+        """
+        Populate additional columns in the table using GitHub repository data.
+        This includes build_sys_type, deps_file_url, deps_file_content_orig, contributors,
+        and requirements_last_commit_date.
         """
         session, schema = create_session(self.db_name)
-        if not session: return False
+        if not session:
+            return False
 
-        columns = ["file_or_repo", "status"]
-
-        rows_total = 0
-        file_loc = os.path.join(ROOT, "output", "build_check_results.csv")
-
-        data = None
-        with open(file_loc, 'r', encoding='utf-8') as f:
-            # data = json.load(f)
-            data = pd.read_csv(f)
-
+        rows_updated = 0
         table = schema.get_table(self.table_name)
 
         try:
-            for idx, row in data.iterrows():
-                row = row.to_dict()
-                file_or_repo, status = None, 'open'
+            # Fetch all rows from the table
+            rows = table.select('github_url, paper_title').execute().fetch_all()
 
-                for k, v in row.items():
-                    if k == "file_or_repo":
-                        file_or_repo = v.strip()
-                    elif k == "status":
-                        status = v.strip()
+            rows = rows[:row_limit] if row_limit else rows
 
-                try:
-                    table.insert(columns).values([file_or_repo, status]).execute()
-                    rows_total += 1
-                except Exception as e:
-                    print(f"Error inserting row #{idx}: {str(e)}")
-                    continue
+            for row in rows:
+                github_url = row[0]
+                paper_title = row[1]
 
-            print(f"Rows inserted: {rows_total} of attempted {len(data)}")
-            print(f"Total rows: {table.count()}")
+                if github_url:
+                    owner_repo = self.extract_owner_repo(github_url)
+                    if owner_repo:
+                        owner, repo = owner_repo
+
+                        # Determine the requirements.txt file URL
+                        possible_paths = [
+                            f"https://raw.githubusercontent.com/{owner}/{repo}/main/requirements.txt",
+                            f"https://raw.githubusercontent.com/{owner}/{repo}/master/requirements.txt",
+                            f"https://github.com/{owner}/{repo}/blob/main/requirements.txt",
+                            f"https://github.com/{owner}/{repo}/blob/master/requirements.txt"
+                        ]
+                        deps_file_content_orig, deps_file_url, deps_last_commit_date = None, None, None
+
+                        for path in possible_paths:
+                            content = self.get_file_content(path)
+                            if content:
+                                deps_file_content_orig = content
+                                deps_file_url = path
+                                break
+
+                        # Fetch last commit date for the requirements file
+                        if deps_file_url:
+                            deps_last_commit_date = self.get_last_commit_date(
+                                owner, repo, 'requirements.txt'
+                            )
+
+                        # Determine build system type
+                        build_sys_type = 'requirements.txt' if deps_file_content_orig else None
+
+                        # Get contributors
+                        contributors = self.get_contributors(owner, repo)
+                        if contributors and len(contributors) > 255:
+                            contributors = contributors[:252] + '...'
+
+                        # Escape all values for SQL
+                        escaped_values = {
+                            'build_sys_type': escape_value(build_sys_type),
+                            'deps_file_url': escape_value(deps_file_url),
+                            'deps_file_content_orig': escape_value(deps_file_content_orig),
+                            'contributors': escape_value(contributors),
+                            'deps_last_commit_date': escape_value(deps_last_commit_date),
+                            'paper_title': escape_value(paper_title)
+                        }
+                        update_cmd = f"""
+                        UPDATE {self.table_name}
+                        SET build_sys_type = {escaped_values['build_sys_type']},
+                            deps_file_url = {escaped_values['deps_file_url']},
+                            deps_file_content_orig = {escaped_values['deps_file_content_orig']},
+                            contributors = {escaped_values['contributors']},
+                            deps_last_commit_date = {escaped_values['deps_last_commit_date']}
+                        WHERE paper_title = {escaped_values['paper_title']};
+                        """
+
+                        try:
+                            session.sql(update_cmd).execute()
+                            rows_updated += 1
+                            if rows_updated % 1000 == 0:
+                                print(f"Updated {rows_updated} rows...")
+                        except Exception as e:
+                            print(f"Error updating row for {paper_title}: {str(e)}")
+                            continue
+
+            print(f"Total rows updated with additional info: {rows_updated}")
+            if row_limit:
+                print(f"(Limited to {row_limit} rows)")
+            return True
 
         except Exception as e:
-            print(f"Error populating table: {str(e)}")
+            print(f"Error populating additional info: {str(e)}")
             return False
         finally:
             session.close()
-        return True
-
-    def populate_table_issues_classified(self) -> bool:
-        """
-        populate the table with data from output/issues_classified.csv
-        only has 'title', 'body' fields
-        """
-        session, schema = create_session(self.db_name)
-        if not session: return False
-
-        # columns = ["title", "body", "labels", "comments_count", "state", "is_version_issue"]
-
-        columns = ["title", "body"]
-
-        rows_inserted = 0
-        file_loc = os.path.join(ROOT, "output", "issues_classified.csv")
-        data = None
-        with open(file_loc, 'r', encoding='utf-8') as f:
-            data = pd.read_csv(f)
-
-        table = schema.get_table(self.table_name)
-
-        try:
-            for idx, row in data.iterrows():
-                row = row.to_dict()
-                title, body = None, None
-                try:
-                    title = row["title"]
-                except KeyError:
-                    pass
-                try:
-                    body = row["body"]
-                except KeyError:
-                    pass
-
-                try:
-                    table.insert(columns).values([title, body]).execute()
-                    rows_inserted += 1
-                except Exception as e:
-                    print(f"Error inserting row #{idx}: {str(e)}")
-                    continue
-
-            print(f"Rows inserted: {rows_inserted} of attempted {len(data)}")
-            print(f"Total rows: {table.count()}")
-
-        except Exception as e:
-            print(f"Error populating table: {str(e)}")
-            return False
-        finally:
-            session.close()
-        return True
-
-    def populate_table_updated_requirements(self) -> bool:
-        """
-        populate the table with data from output/updated_requirements_results.csv
-        only has 'github_link', 'updated_requirements' fields
-        """
-        session, schema = create_session(self.db_name)
-        if not session: return False
-
-        columns = ["github_url", "updated_requirements"]
-
-        rows_inserted = 0
-        file_loc = os.path.join(ROOT, "output", "updated_requirements_results.csv")
-        data = None
-        with open(file_loc, 'r', encoding='ascii') as f:
-            data = pd.read_csv(f)
-
-        table = schema.get_table(self.table_name)
-
-        try:
-            for idx, row in data.iterrows():
-                row = row.to_dict()
-                github_url, updated_requirements = None, 'No requirements found'
-
-                for k, v in row.items():
-                    if k == "github_link":
-                        github_url = v.strip()
-                    elif k == "updated_requirements":
-                        updated_requirements = v.strip()
-
-                try:
-                    table.insert(columns).values([github_url, updated_requirements]).execute()
-                    rows_inserted += 1
-                except Exception as e:
-                    print(f"Error inserting row #{idx}: {str(e)}")
-                    continue
-
-            print(f"Rows inserted: {rows_inserted} of attempted {len(data)}")
-            print(f"Total rows: {table.count()}")
-
-        except Exception as e:
-            print(f"Error populating table: {str(e)}")
-            return False
-        finally:
-            session.close()
-        return True
 
 
 if __name__ == '__main__':
-
+    database_name = "grimrepor_database"
+    row_limit_parse = 1000
+    row_limit_view = 10
     spinup_mysql_server()
     show_databases()
-    create_db(db_name="grimrepor_db") # do once
-    show_all_tables(db_name="grimrepor_db")
-    # added user confirmation to drop all tables sa this is a destructive operation
-    drop_all_tables(db_name="grimrepor_db")
+    create_db(db_name=database_name) # do once
+    show_all_tables(db_name=database_name)
+    drop_all_tables(db_name=database_name) # for testing
 
-    paper_repo_info_reqs = Table(table_name="paper_repo_info_reqs", db_name="grimrepor_db")
-    paper_repo_info_reqs.create_table(create_table_dict["paper_repo_info_reqs"])
-    show_table_columns("paper_repo_info_reqs", "grimrepor_db")
-    paper_repo_info_reqs.populate_table_paper_repo_info_reqs()
-    show_table_contents("paper_repo_info_reqs", "grimrepor_db", limit_num=10)
+    papers_and_code = Table(table_name="papers_and_code", db_name=database_name)
+    papers_and_code.create_table_full()
+    show_table_columns("papers_and_code", db_name=database_name)
+    papers_and_code.populate_table_from_papers_and_code_json(row_limit=row_limit_parse)
+    show_table_contents("papers_and_code", db_name=database_name, limit_num=row_limit_view)
 
-    papers_data = Table(table_name="papers_data", db_name="grimrepor_db")
-    papers_data.create_table(create_table_dict["papers_data"])
-    show_table_columns("papers_data", "grimrepor_db")
-    papers_data.populate_table_papers_data()
-    show_table_contents("papers_data", "grimrepor_db", limit_num=10)
+    papers_and_code.populate_table_from_github_repo()
+    show_table_contents("papers_and_code", db_name=database_name, limit_num=row_limit_view)
 
-    build_check_results = Table(table_name="build_check_results", db_name="grimrepor_db")
-    build_check_results.create_table(create_table_dict["build_check_results"])
-    show_table_columns("build_check_results", "grimrepor_db")
-    build_check_results.populate_table_build_check_results()
-    show_table_contents("build_check_results", "grimrepor_db", limit_num=10)
 
-    papers_and_code_linked = Table(table_name="papers_and_code_linked", db_name="grimrepor_db")
-    # print(f'{create_table_dict["papers_and_code_linked"] = }')
-    papers_and_code_linked.create_table(create_table_dict["papers_and_code_linked"])
-    show_table_columns("papers_and_code_linked", "grimrepor_db")
-    # # Caution: large file, takes a few min
+    # have function to populate the table from each data source
+    # FIND      first 5 cols from 'links-between-papers-and-code.json'
+    # QUALIFY   next 5 columns web scraping the git repo
+    # BUILD     venv build and see if reqs install correctly
+    # FIX       update reqs, find python compat version(s)
+    # PUBLISH   git fork, git clone, git push, git pull request, tweet
+    # # import function into another file to do the cell updates...
+
     # TODO: optimize speed
-    papers_and_code_linked.populate_table_papers_and_code_linked()
     # DESIGN CHOICE: there are some papers with 10+ repos for example,
     # so consider if we want to link duplicates, have a separate table for duplicates,
     # keep track of which paper title corresponds and then delete all entries related after bulk upload
-    show_table_contents("papers_and_code_linked", "grimrepor_db", limit_num=10)
 
-    issues_classified = Table(table_name="issues_classified", db_name="grimrepor_db")
-    issues_classified.create_table(create_table_dict["issues_classified"])
-    show_table_columns("issues_classified", "grimrepor_db")
-    issues_classified.populate_table_issues_classified()
-    show_table_contents("issues_classified", "grimrepor_db", limit_num=10)
+    show_all_tables(db_name=database_name)
 
-    updated_requirements = Table(table_name="updated_requirements", db_name="grimrepor_db")
-    updated_requirements.create_table(create_table_dict["updated_requirements"])
-    show_table_columns("updated_requirements", "grimrepor_db")
-    updated_requirements.populate_table_updated_requirements()
-    show_table_contents("updated_requirements", "grimrepor_db", limit_num=10)
-
-    show_all_tables("grimrepor_db")
-
-    # TODO: add foreign keys to the tables now that parsing works - come up with a schema for the database
 
 # use a .env file at the root of the project with the following:
-# MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSWORD
+# MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSWORD, GITHUB_TOKEN
