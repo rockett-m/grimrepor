@@ -6,14 +6,23 @@ import pandas as pd
 import requests
 import json
 import mysqlx
+from multiprocessing import Pool, Manager
+from functools import partial
+import math
 from datetime import datetime
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 
 load_dotenv()
 
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+# Database configuration
 DATABASE_NAME = os.getenv('DATABASE_NAME') or "grimrepor_db"
+MYSQL_HOST = os.getenv('MYSQL_HOST', 'localhost')
+MYSQL_USER = os.getenv('MYSQL_USER', 'root')
+MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD', '')
+MYSQL_PORT = int(os.getenv('MYSQL_PORT', 3306))
+
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 
 ROOT = subprocess.check_output("git rev-parse --show-toplevel", shell=True).decode('utf-8').strip()
 sys.path.append(ROOT)
@@ -24,48 +33,37 @@ if OS != 'linux' and OS != 'darwin':
     raise Exception('Unsupported OS')
 
 
-def install_mysql() -> bool:
-    """
-    choosing default installation (not secure)
-    run mysql_secure_installation for secure installation
-    """
-    # if already installed, return
-    cmd_test = ['mysql', '--version']
-
+def is_mysql_installed() -> bool:
+    """Check if MySQL server and client are installed"""
     if OS == "linux":
-        cmd_test.insert(0, "sudo")
-        result = subprocess.run(cmd_test, check=True)
-        if result.returncode == 0:
-            print("MySQL is already installed.")
-            return True
-        else:
-            print("MySQL is not installed. Installing MySQL...")
-            # install mysql if not installed and check status to verify
-            try:
-                # subprocess.run(['sudo', 'apt', 'update'], check=True)
-                subprocess.run(['sudo', 'apt', 'install', '-y', 'mysql-server'], check=True)
-                subprocess.run(['sudo', 'systemctl', 'status', 'mysql'], check=True)
-                print("MySQL installation completed.")
-                return True
-            except Exception as e:
-                print(f"Error installing mysql: {str(e)}")
-                return False
-    elif OS == 'darwin':
-        result = subprocess.run(cmd_test)
-        if result.returncode == 0:
-            print("MySQL is already installed.")
-            return True
-        else:
-            print("MySQL is not installed. Installing MySQL...")
-            try:
-                subprocess.run(['brew', 'install', 'mysql'], check=True)
-                print("MySQL installation completed.")
-                return True
-            except Exception as e:
-                print(f"Error installing mysql: {str(e)}")
-                return False
-    else:
-        print("Unsupported OS")
+        try:
+            # Check MySQL client
+            client_check = subprocess.run(['dpkg', '-l', 'mysql-client'],
+                capture_output=True, check=False)
+            # Check MySQL server
+            server_check = subprocess.run(['dpkg', '-l', 'mysql-server'],
+                capture_output=True, check=False)
+            return client_check.returncode == 0 and server_check.returncode == 0
+        except Exception as e:
+            print(f"Error checking MySQL installation: {e}")
+            return False
+    elif OS == "darwin":
+        try:
+            result = subprocess.run(['brew', 'list', 'mysql'],
+                capture_output=True, check=False)
+            return result.returncode == 0
+        except Exception as e:
+            print(f"Error checking MySQL installation: {e}")
+            return False
+    return False
+
+def is_mysql_running() -> bool:
+    """Check if MySQL server is running"""
+    try:
+        subprocess.run(['mysqladmin', 'ping'],
+            capture_output=True, check=True)
+        return True
+    except subprocess.CalledProcessError:
         return False
 
 def launch_server() -> bool:
@@ -90,15 +88,17 @@ def launch_server() -> bool:
         return False
 
 def spinup_mysql_server() -> bool:
-    if not install_mysql():
-        print("Error installing mysql")
-        return False
+    """Ensure MySQL server is running"""
+    if is_mysql_running():
+        print("MySQL server is already running")
+        return True
 
     if not launch_server():
-        print("Error launching mysql server")
+        print("Error launching MySQL server")
         return False
 
-    return True
+    # Verify server started successfully
+    return is_mysql_running()
 
 def create_session(db_name: str = None) -> object:
     """
@@ -108,10 +108,10 @@ def create_session(db_name: str = None) -> object:
     returns the session object (open connection)
     """
     conn_params = {}
-    conn_params["host"] = str(os.getenv("MYSQL_HOST", "localhost"))
-    conn_params["port"] = int(os.getenv("MYSQL_PORT", "33060"))
-    conn_params["user"] = str(os.getenv("MYSQL_USER", "root"))
-    conn_params["password"] = str(os.getenv("MYSQL_PASSWORD", ""))
+    conn_params["host"] = MYSQL_HOST
+    conn_params["port"] = MYSQL_PORT
+    conn_params["user"] = MYSQL_USER
+    conn_params["password"] = MYSQL_PASSWORD
 
     try:
         session = mysqlx.get_session(**conn_params)
@@ -300,6 +300,60 @@ def escape_value(value):
     # escape single quotes and backslashes
     return "'" + str(value).replace("'", "''").replace("\\", "\\\\") + "'"
 
+def process_chunk_json(chunk, shared_counts, lock, table_name, db_name):
+    session, schema = create_session(db_name)
+    if not session: return False
+
+    local_inserted = 0
+    local_skipped = 0
+
+    try:
+        for row in chunk:
+            if isinstance(row, str):
+                try:
+                    row = json.loads(row)
+                except json.JSONDecodeError:
+                    local_skipped += 1
+                    continue
+
+            if not row.get('paper_url_abs'):
+                local_skipped += 1
+                continue
+            elif re.match(r"http[s]{0,1}://.+/http[s]{0,1}-github.com", row.get('repo_url')):
+                local_skipped += 1
+                continue
+
+            values = [
+                escape_value(row.get('paper_title')),
+                escape_value(row.get('paper_arxiv_id')),
+                escape_value(row.get('paper_url_abs')),
+                escape_value(row.get('paper_url')),
+                escape_value(row.get('repo_url')),
+            ]
+
+            insert_cmd = f"""
+            INSERT INTO {table_name} (
+                paper_title, paper_arxiv_id, paper_arxiv_url, paper_pwc_url, github_url
+            ) VALUES (
+                {values[0]}, {values[1]}, {values[2]}, {values[3]}, {values[4]}
+            )"""
+
+            try:
+                session.sql(insert_cmd).execute()
+                session.commit()
+                local_inserted += 1
+            except Exception:
+                local_skipped += 1
+                continue
+
+        # Update shared counters with lock
+        with lock:
+            shared_counts['inserted'] += local_inserted
+            shared_counts['skipped'] += local_skipped
+
+    finally:
+        session.close()
+
 
 class Table:
     def __init__(self, table_name: str, db_name: str = "grimrepor_db"):
@@ -379,7 +433,7 @@ class Table:
             session.close()
 
     @timeit
-    def populate_table_from_papers_and_code_json(self, row_limit: int = None) -> bool:
+    def populate_table_from_papers_and_code_json_sequential(self, row_limit: int = None) -> bool:
         """
         populate the table with data from data/links-between-papers-and-code.json
         sample:
@@ -420,6 +474,9 @@ class Table:
         data = None
         with open(file_loc, 'r', encoding='ascii') as f:
             data = json.load(f)
+        if not data:
+            print("JSON file not read in correctly")
+            return False
 
         table = schema.get_table(self.table_name)
         rows_inserted, rows_skipped = 0, 0
@@ -483,6 +540,51 @@ class Table:
             return False
         finally:
             session.close()
+        return True
+
+    @timeit
+    def populate_table_from_papers_and_code_json_parallel(self, row_limit: int = None) -> bool:
+        file_loc = os.path.join(ROOT, "data", "links-between-papers-and-code.json")
+        try:
+            with open(file_loc, 'r', encoding='ascii') as f:
+                data = json.load(f)
+            if not data:
+                print("JSON file not read in correctly")
+                return False
+        except Exception as e:
+            print(f"Error reading JSON file: {str(e)}")
+            return False
+
+        data = data[:row_limit] if row_limit else data
+
+        # Calculate chunk size and number of processes
+        num_processes = min(os.cpu_count(), 16)
+        chunk_size = math.ceil(len(data) / num_processes)
+        chunks = [data[i:i + chunk_size] for i in range(0, len(data), chunk_size)]
+
+        # Shared counters and lock
+        manager = Manager()
+        shared_counts = manager.dict()
+        shared_counts['inserted'] = 0
+        shared_counts['skipped'] = 0
+        lock = manager.Lock()
+
+        # Process chunks in parallel
+        with Pool(processes=num_processes) as pool:
+            pool.map(
+                partial(process_chunk_json,
+                    shared_counts=shared_counts,
+                    lock=lock,
+                    table_name=self.table_name,
+                    db_name=self.db_name),
+                chunks
+            )
+
+        # Print final statistics
+        print(f"Rows inserted: {shared_counts['inserted']}, "
+            f"Rows skipped: {shared_counts['skipped']} "
+            f"of attempted {len(data)}")
+
         return True
 
     def convert_to_mysql_date(self, iso_datetime):
@@ -633,7 +735,7 @@ class Table:
             return None
 
     @timeit
-    def populate_table_from_github_repo(self, row_limit: int = None) -> bool:
+    def populate_table_from_github_repo_sequential(self, row_limit: int = None) -> bool:
         """
         Populate additional columns in the table using GitHub repository data.
         This includes:
@@ -648,8 +750,7 @@ class Table:
         """
         # TODO: optimize speed
         session, schema = create_session(self.db_name)
-        if not session:
-            return False
+        if not session: return False
 
         rows_updated, rows_skipped = 0, 0
         table = schema.get_table(self.table_name)
@@ -764,7 +865,17 @@ class Table:
 if __name__ == '__main__':
     row_limit_parse = 1000
     row_limit_view = 10
-    spinup_mysql_server()
+
+    # make sure mysql is installed and running
+    if not is_mysql_installed():
+        print("MySQL is not installed. Please run database/mysql_setup.sh to install MySQL.")
+        sys.exit(1)
+
+    print("Ensuring MySQL server is running...")
+    if not spinup_mysql_server():
+        print("Failed to start MySQL server. Check system logs")
+        sys.exit(1)
+
     show_databases()
     create_db(db_name=DATABASE_NAME) # do once
     show_all_tables(db_name=DATABASE_NAME)
@@ -781,14 +892,21 @@ if __name__ == '__main__':
     papers_and_code = Table(table_name="papers_and_code", db_name=DATABASE_NAME)
     papers_and_code.create_table_full()
     show_table_columns("papers_and_code", db_name=DATABASE_NAME)
-    # since this is just parsing a static json, we don't need to limit row count here
-    # 185,000 new rows of 260,000 possible \/ took 158 seconds on M3 Max MBP
-    papers_and_code.populate_table_from_papers_and_code_json()
+    # 185,000 new rows of 272,000 possible \/
+    # sequential took 158 seconds on M3 Max MBP with 14 cores, 96GB RAM
+    # sequential took 459 seconds on 2x Xeon E5-2699 v4 server with 44 cores, 256GB RAM
+    # papers_and_code.populate_table_from_papers_and_code_json_sequential()
+    # parallel took 23 seconds on M3 Max MBP with 14 cores, 96GB RAM
+    # parallel took 40 seconds on 2x Xeon E5-2699 v4 server with 44 cores, 256GB RAM
+    papers_and_code.populate_table_from_papers_and_code_json_parallel()
     show_table_contents("papers_and_code", db_name=DATABASE_NAME, limit_num=row_limit_view)
 
     # given the 5000 github api call limit per hour, row limit is set here
-    # 1000 insertions \/ took 1075 seconds on M3 Max MBP
-    papers_and_code.populate_table_from_github_repo(row_limit=row_limit_parse)
+    # 1000 insertions
+    # took 1075 seconds on M3 Max MBP
+    # took 920 seconds on 2x Xeon E5-2699 v4 server
+    papers_and_code.populate_table_from_github_repo_sequential(row_limit=row_limit_parse)
+    # TODO: parallelize github fetching code
     show_table_contents("papers_and_code", db_name=DATABASE_NAME, limit_num=row_limit_view)
 
     # build, fix, publish columns not filled in with this script (yet)
