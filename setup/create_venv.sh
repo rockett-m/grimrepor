@@ -18,9 +18,18 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     brew install python@3.12
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     echo "Setting up Python 3.12 on Ubuntu..."
-    sudo add-apt-repository -y ppa:deadsnakes/ppa
-    sudo apt update
-    sudo apt install -y python3.12 python3.12-venv
+    if ! which python3.12 &> /dev/null; then
+        sudo apt-get update -y
+        sudo apt-get install -y software-properties-common
+        sudo add-apt-repository -y ppa:deadsnakes/ppa
+        sudo apt update -y
+        sudo apt install -y python3.12 python3.12-dev python3.12-venv
+    elif ! python3.12 -m venv --help &> /dev/null; then
+        sudo apt-get update -y
+        sudo add-apt-repository -y ppa:deadsnakes/ppa
+        sudo apt update -y
+        sudo apt-get install -y python3.12-venv
+    fi
 else
     echo "Unsupported operating system"
     exit 1

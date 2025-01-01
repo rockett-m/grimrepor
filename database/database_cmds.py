@@ -6,12 +6,21 @@ import pandas as pd
 import requests
 import json
 import mysqlx
+import asyncio
 from multiprocessing import Pool, Manager
 from functools import partial
 import math
 from datetime import datetime
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
+
+"""
+To run:
+./setup/create_venv.sh
+./setup/mysql_setup.sh
+source venv/bin/activate
+(venv) python3 database/database_cmds.py
+"""
 
 load_dotenv()
 
@@ -24,7 +33,7 @@ MYSQL_PORT = int(os.getenv('MYSQL_PORT', 3306))
 
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 
-ROOT = subprocess.check_output("git rev-parse --show-toplevel", shell=True).decode('utf-8').strip()
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(ROOT)
 from utils.decorators import timeit
 
@@ -100,7 +109,7 @@ def spinup_mysql_server() -> bool:
     # Verify server started successfully
     return is_mysql_running()
 
-def create_session(db_name: str = None) -> object:
+def create_session(db_name: str = os.getenv('DATABASE_NAME')) -> object:
     """
     create mysql server session
     can create a database without giving db_name
