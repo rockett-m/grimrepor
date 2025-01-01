@@ -4,7 +4,7 @@ import shutil
 import requests
 import pandas as pd
 
-ROOT = subprocess.check_output("git rev-parse --show-toplevel", shell=True).decode('utf-8').strip()
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 # GitHub API URL for creating repositories
 GITHUB_API_URL = "https://api.github.com/user/repos"
