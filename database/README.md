@@ -16,11 +16,16 @@ The `database_cmds.py` script handles:
 
 A `.env` file is required in the root directory with the following variables:
 
-DB_HOST=localhost
-DB_USER=your_username
-DB_PASSWORD=your_password
-DB_NAME=your_database_name
-GITHUB_TOKEN=your_github_token
+```console
+MYSQL_HOST='localhost'  
+MYSQL_PORT=3306|33060  
+MYSQL_USER='root'  
+MYSQL_PASSWORD=''  
+MYSQL_ROOT_PASSWORD='non_blank_pw'  
+GITHUB_TOKEN=your_github_token  
+OPENAI_API_KEY=api_key  
+DATABASE_NAME='grimrepor_db'  
+```
 
 ## Table Schema
 
@@ -52,6 +57,19 @@ GITHUB_TOKEN=your_github_token
 ## Data Population
 
 ### Launch database creation and table population
+Linux setup will require sudo
+```bash
+./setup/create_venv.sh
+```
+
+```bash
+./setup/mysql_setup.sh
+```
+
+```bash
+source venv/bin/activate
+```
+
 ```bash
 (venv) python3 database/database_cmds.py
 ```

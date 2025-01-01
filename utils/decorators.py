@@ -2,7 +2,7 @@ from time import time
 """
 import into other python files like
 
-ROOT = subprocess.check_output("git rev-parse --show-toplevel", shell=True).decode('utf-8').strip()
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(ROOT)
 from utils.decorators import timeit
 """
