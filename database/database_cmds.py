@@ -11,9 +11,14 @@ from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 
 load_dotenv()
+
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+DATABASE_NAME = os.getenv('DATABASE_NAME') or "grimrepor_db"
 
 ROOT = subprocess.check_output("git rev-parse --show-toplevel", shell=True).decode('utf-8').strip()
+sys.path.append(ROOT)
+from utils.decorators import timeit
+
 OS = sys.platform
 if OS != 'linux' and OS != 'darwin':
     raise Exception('Unsupported OS')
@@ -307,6 +312,15 @@ class Table:
         """
         create a table in the database
         note that in create session, the database is selected
+
+        Unique constraints are necessary because there are 283 instances of these exact fields:
+            "paper_url": "https://paperswithcode.com/paper/a-neural-algorithm-of-artistic-style",
+            "paper_title": "A Neural Algorithm of Artistic Style",
+            "paper_arxiv_id": "1508.06576",
+            "paper_url_abs": "http://arxiv.org/abs/1508.06576v2",
+            "paper_url_pdf": "http://arxiv.org/pdf/1508.06576v2.pdf",
+
+        all with different "repo_url" values (github's associated)
         """
         session, schema = create_session(self.db_name)
         if not session:
@@ -364,6 +378,7 @@ class Table:
         finally:
             session.close()
 
+    @timeit
     def populate_table_from_papers_and_code_json(self, row_limit: int = None) -> bool:
         """
         populate the table with data from data/links-between-papers-and-code.json
@@ -425,6 +440,13 @@ class Table:
                     print(f"Skipping row #{idx}: Missing required paper_pwc_url")
                     rows_skipped += 1
                     continue
+                elif re.match(r"http[s]{0,1}://.+/http[s]{0,1}-github.com", row.get('repo_url')):
+                    # skip repos with multiple http[s] occurences inside
+                    # retrieving raw github file content can fail
+                    # "repo_url":
+                    # "https://github.com/NateKoenig/https-github.com-Kautenja-a-neural-algorithm-of-artistic-style",
+                    rows_skipped += 1
+                    continue
 
                 values = [
                     escape_value(row.get('paper_title')),
@@ -443,6 +465,9 @@ class Table:
                     session.sql(insert_update_cmd).execute()
                     session.commit()
                     rows_inserted += 1
+                    if rows_inserted % 10000 == 0:
+                        print(f"-- Rows inserted: {rows_inserted} --")
+
                 except Exception as e:
                     print(f"Error inserting row #{idx}: {str(e)}")
                     rows_skipped += 1
@@ -607,28 +632,37 @@ class Table:
             print(f"Error fetching last commit date for {file_path} in {owner}/{repo}: {str(e)}")
             return None
 
+    @timeit
     def populate_table_from_github_repo(self, row_limit: int = None) -> bool:
         """
         Populate additional columns in the table using GitHub repository data.
-        This includes build_sys_type, deps_file_url, deps_file_content_orig, contributors,
-        and requirements_last_commit_date.
+        This includes:
+
+        build_sys_type ['Not found', 'pip', 'conda']
+        deps_file_url  f"https://raw.githubusercontent.com/{owner}/{repo}/{main,master}/{requirements.txt,env.yml,environment.yml}"
+        deps_file_content_orig  module0==1.0.2 module0==2.3.4
+        contributors  github_username1, github_username2
+        requirements_last_commit_date  'YYYY-MM-DD'
+
+        if build_sys_type == "Not found" then the other fields are left NULL
         """
+        # TODO: optimize speed
         session, schema = create_session(self.db_name)
         if not session:
             return False
 
-        rows_updated = 0
+        rows_updated, rows_skipped = 0, 0
         table = schema.get_table(self.table_name)
 
         try:
             # Fetch all rows from the table
-            rows = table.select('github_url, paper_title').execute().fetch_all()
-
+            # avoid rechecking rows where the build_sys_type has been populated (previously hit this section)
+            rows = table.select('github_url, paper_title').where('build_sys_type IS NULL').execute().fetch_all()
             rows = rows[:row_limit] if row_limit else rows
 
             for row in rows:
-                github_url = row[0]
-                paper_title = row[1]
+                github_url = row[0]  # Now correctly points to github_url
+                paper_title = row[1]  # Now correctly points to paper_title
 
                 if github_url:
                     owner_repo = self.extract_owner_repo(github_url)
@@ -636,64 +670,86 @@ class Table:
                         owner, repo = owner_repo
 
                         # Determine the requirements.txt file URL
-                        possible_paths = [
-                            f"https://raw.githubusercontent.com/{owner}/{repo}/main/requirements.txt",
-                            f"https://raw.githubusercontent.com/{owner}/{repo}/master/requirements.txt",
-                            f"https://github.com/{owner}/{repo}/blob/main/requirements.txt",
-                            f"https://github.com/{owner}/{repo}/blob/master/requirements.txt"
-                        ]
+                        prefix = "https://raw.githubusercontent.com"
+                        builds_and_paths = {
+                        'pip':
+                        [
+                            f"{prefix}/{owner}/{repo}/main/requirements.txt",
+                            f"{prefix}/{owner}/{repo}/master/requirements.txt"
+                        ],
+                        'conda':
+                        [
+                            f"{prefix}/{owner}/{repo}/main/environment.yml",
+                            f"{prefix}/{owner}/{repo}/master/environment.yml",
+                            f"{prefix}/{owner}/{repo}/main/env.yml",
+                            f"{prefix}/{owner}/{repo}/master/env.yml"
+                        ]}
                         deps_file_content_orig, deps_file_url, deps_last_commit_date = None, None, None
-
-                        for path in possible_paths:
-                            content = self.get_file_content(path)
-                            if content:
-                                deps_file_content_orig = content
-                                deps_file_url = path
-                                break
-
-                        # Fetch last commit date for the requirements file
-                        if deps_file_url:
-                            deps_last_commit_date = self.get_last_commit_date(
-                                owner, repo, 'requirements.txt'
-                            )
+                        build_sys_type = "Not found"
+                        for build_sys, deps_files in builds_and_paths.items():
+                            for deps_file_path in deps_files:
+                                content = self.get_file_content(deps_file_path)
+                                if content:
+                                    deps_file_content_orig = content
+                                    deps_file_url = deps_file_path
+                                    build_sys_type = build_sys
+                                    break
 
                         # Determine build system type
-                        build_sys_type = 'requirements.txt' if deps_file_content_orig else None
-
-                        # Get contributors
-                        contributors = self.get_contributors(owner, repo)
-                        if contributors and len(contributors) > 255:
-                            contributors = contributors[:252] + '...'
-
-                        # Escape all values for SQL
-                        escaped_values = {
-                            'build_sys_type': escape_value(build_sys_type),
-                            'deps_file_url': escape_value(deps_file_url),
-                            'deps_file_content_orig': escape_value(deps_file_content_orig),
-                            'contributors': escape_value(contributors),
-                            'deps_last_commit_date': escape_value(deps_last_commit_date),
-                            'paper_title': escape_value(paper_title)
-                        }
+                        # hinge upon value of build_sys_type for future table queries
+                        # default sql update table if we don't find a requirements file
                         update_cmd = f"""
                         UPDATE {self.table_name}
-                        SET build_sys_type = {escaped_values['build_sys_type']},
-                            deps_file_url = {escaped_values['deps_file_url']},
-                            deps_file_content_orig = {escaped_values['deps_file_content_orig']},
-                            contributors = {escaped_values['contributors']},
-                            deps_last_commit_date = {escaped_values['deps_last_commit_date']}
-                        WHERE paper_title = {escaped_values['paper_title']};
+                        SET build_sys_type = {escape_value(build_sys_type)}
+                        WHERE paper_title = {escape_value(paper_title)}
                         """
+
+                        # we found a requirements file, so fetch additional info from repo
+                        if build_sys_type != "Not found":
+                            # Fetch last commit date for the requirements file
+                            if deps_file_url:
+                                deps_last_commit_date = self.get_last_commit_date(
+                                    owner, repo, 'requirements.txt'
+                                )
+
+                            # Get contributors
+                            contributors = self.get_contributors(owner, repo)
+                            if contributors and len(contributors) > 255:
+                                contributors = contributors[:252] + '...'
+
+                            # Escape all values for SQL
+                            escaped_values = {
+                                'build_sys_type': escape_value(build_sys_type),
+                                'deps_file_url': escape_value(deps_file_url),
+                                'deps_file_content_orig': escape_value(deps_file_content_orig),
+                                'contributors': escape_value(contributors),
+                                'deps_last_commit_date': escape_value(deps_last_commit_date),
+                                'paper_title': escape_value(paper_title)
+                            }
+                            # overwrite default command if fields can be scraped
+                            update_cmd = f"""
+                            UPDATE {self.table_name}
+                            SET build_sys_type = {escaped_values['build_sys_type']},
+                                deps_file_url = {escaped_values['deps_file_url']},
+                                deps_file_content_orig = {escaped_values['deps_file_content_orig']},
+                                contributors = {escaped_values['contributors']},
+                                deps_last_commit_date = {escaped_values['deps_last_commit_date']}
+                            WHERE paper_title = {escaped_values['paper_title']};
+                            """
 
                         try:
                             session.sql(update_cmd).execute()
                             rows_updated += 1
-                            if rows_updated % 1000 == 0:
-                                print(f"Updated {rows_updated} rows...")
+                            if rows_updated % 100 == 0:
+                                print(f"-- Rows updated: {rows_updated} --\n")
+
                         except Exception as e:
+                            rows_skipped += 1
                             print(f"Error updating row for {paper_title}: {str(e)}")
                             continue
 
             print(f"Total rows updated with additional info: {rows_updated}")
+            print(f"Rows skipped: {rows_skipped}\n")
             if row_limit:
                 print(f"(Limited to {row_limit} rows)")
             return True
@@ -706,24 +762,13 @@ class Table:
 
 
 if __name__ == '__main__':
-    database_name = "grimrepor_database"
     row_limit_parse = 1000
     row_limit_view = 10
     spinup_mysql_server()
     show_databases()
-    create_db(db_name=database_name) # do once
-    show_all_tables(db_name=database_name)
-    drop_all_tables(db_name=database_name) # for testing
-
-    papers_and_code = Table(table_name="papers_and_code", db_name=database_name)
-    papers_and_code.create_table_full()
-    show_table_columns("papers_and_code", db_name=database_name)
-    papers_and_code.populate_table_from_papers_and_code_json(row_limit=row_limit_parse)
-    show_table_contents("papers_and_code", db_name=database_name, limit_num=row_limit_view)
-
-    papers_and_code.populate_table_from_github_repo()
-    show_table_contents("papers_and_code", db_name=database_name, limit_num=row_limit_view)
-
+    create_db(db_name=DATABASE_NAME) # do once
+    show_all_tables(db_name=DATABASE_NAME)
+    drop_all_tables(db_name=DATABASE_NAME) # for testing
 
     # have function to populate the table from each data source
     # FIND      first 5 cols from 'links-between-papers-and-code.json'
@@ -733,13 +778,26 @@ if __name__ == '__main__':
     # PUBLISH   git fork, git clone, git push, git pull request, tweet
     # # import function into another file to do the cell updates...
 
-    # TODO: optimize speed
-    # DESIGN CHOICE: there are some papers with 10+ repos for example,
-    # so consider if we want to link duplicates, have a separate table for duplicates,
-    # keep track of which paper title corresponds and then delete all entries related after bulk upload
+    papers_and_code = Table(table_name="papers_and_code", db_name=DATABASE_NAME)
+    papers_and_code.create_table_full()
+    show_table_columns("papers_and_code", db_name=DATABASE_NAME)
+    # since this is just parsing a static json, we don't need to limit row count here
+    # 185,000 new rows of 260,000 possible \/ took 158 seconds on M3 Max MBP
+    papers_and_code.populate_table_from_papers_and_code_json()
+    show_table_contents("papers_and_code", db_name=DATABASE_NAME, limit_num=row_limit_view)
 
-    show_all_tables(db_name=database_name)
+    # given the 5000 github api call limit per hour, row limit is set here
+    # 1000 insertions \/ took 1075 seconds on M3 Max MBP
+    papers_and_code.populate_table_from_github_repo(row_limit=row_limit_parse)
+    show_table_contents("papers_and_code", db_name=DATABASE_NAME, limit_num=row_limit_view)
+
+    # build, fix, publish columns not filled in with this script (yet)
+
+    show_all_tables(db_name=DATABASE_NAME)
 
 
-# use a .env file at the root of the project with the following:
-# MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSWORD, GITHUB_TOKEN
+"""
+use a .env file at the root of the project see (.env.example) with the following:
+MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSWORD, GITHUB_TOKEN, DATABASE_NAME
+(venv) python3 database/database_cmds.py
+"""
